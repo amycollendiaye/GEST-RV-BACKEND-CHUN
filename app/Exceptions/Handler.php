@@ -3,6 +3,11 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -26,5 +31,55 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $e)
+    {
+        if ($request->expectsJson()) {
+            if ($e instanceof ValidationException) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Erreur de validation',
+                    'data' => null,
+                    'errors' => $e->errors(),
+                ], 422);
+            }
+
+            if ($e instanceof AuthorizationException) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Non autorisé',
+                    'data' => null,
+                    'errors' => null,
+                ], 403);
+            }
+
+            if ($e instanceof ModelNotFoundException || $e instanceof NotFoundHttpException) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Ressource non trouvée',
+                    'data' => null,
+                    'errors' => null,
+                ], 404);
+            }
+
+            if ($e instanceof HttpException) {
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage() ?: 'Erreur serveur',
+                    'data' => null,
+                    'errors' => null,
+                ], $e->getStatusCode());
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Erreur serveur',
+                'data' => null,
+                'errors' => null,
+            ], 500);
+        }
+
+        return parent::render($request, $e);
     }
 }

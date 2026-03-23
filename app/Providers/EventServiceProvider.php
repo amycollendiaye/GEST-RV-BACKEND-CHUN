@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use App\Events\AdminCreated;
+use App\Events\MedecinCreated;
+use App\Events\SecretaireCreated;
+use App\Listeners\SendAdminCredentialsEmail;
+use App\Listeners\SendMedecinCredentialsSms;
+use App\Listeners\SendSecretaireCredentialsSms;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
@@ -15,8 +19,14 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        AdminCreated::class => [
+            SendAdminCredentialsEmail::class,
+        ],
+        MedecinCreated::class => [
+            SendMedecinCredentialsSms::class,
+        ],
+        SecretaireCreated::class => [
+            SendSecretaireCredentialsSms::class,
         ],
     ];
 

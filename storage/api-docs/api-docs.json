@@ -1,0 +1,2292 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API GEST_RV_CHUN",
+        "description": "Documentation des endpoints API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "Serveur local"
+        },
+        {
+            "url": "/api/v1"
+        }
+    ],
+    "paths": {
+        "/activation": {
+            "get": {
+                "tags": [
+                    "Activation"
+                ],
+                "summary": "Valider un token d'activation",
+                "operationId": "3970cf4e2c10bc9c6334b259e26818d0",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Token valide",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Token invalide ou expiré",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/activation/password": {
+            "post": {
+                "tags": [
+                    "Activation"
+                ],
+                "summary": "Mettre à jour le mot de passe via token",
+                "operationId": "ef68606cb115191f0e4a66122b6c09d6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ActivationPasswordRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mot de passe mis à jour",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActivationTokenResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Token invalide ou expiré",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/register": {
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Créer le premier administrateur",
+                "operationId": "43c92510c63e5bc08ac1751be0ba65d5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "nom",
+                                    "prenom",
+                                    "email",
+                                    "telephone"
+                                ],
+                                "properties": {
+                                    "nom": {
+                                        "type": "string",
+                                        "example": "Diop"
+                                    },
+                                    "prenom": {
+                                        "type": "string",
+                                        "example": "Awa"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "example": "admin@example.com"
+                                    },
+                                    "telephone": {
+                                        "type": "string",
+                                        "example": "771234567"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Administrateur créé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Administrateur déjà existant",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Connexion",
+                "operationId": "fb66b153966d9fac2e999136ef0ade67",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "login",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "login": {
+                                        "type": "string",
+                                        "example": "admfann2025-0001"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "P@ssw0rd!"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Connexion réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Changement de mot de passe requis",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Identifiants invalides",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/change-password": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Changer le mot de passe (première connexion)",
+                "operationId": "73e7fe87ae608fb56115234032e979f2",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "login",
+                                    "current_password",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "login": {
+                                        "type": "string",
+                                        "example": "admfann2025-0001"
+                                    },
+                                    "current_password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "P@ssw0rd!"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "N3wP@ssw0rd!"
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "N3wP@ssw0rd!"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Mot de passe changé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ActivationTokenResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Identifiants invalides",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Mot de passe déjà changé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Déconnexion",
+                "operationId": "307ed0512855922b2280792376bb2095",
+                "responses": {
+                    "200": {
+                        "description": "Déconnexion réussie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/medecins": {
+            "get": {
+                "tags": [
+                    "Medecins"
+                ],
+                "summary": "Liste des médecins",
+                "operationId": "7e2548ff1dde4cf2a043ef7bab63b7a4",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "statut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "specialite",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedecinListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Medecins"
+                ],
+                "summary": "Créer un médecin",
+                "operationId": "8ad0248a856ba6f2734d60ae93959e9a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MedecinCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Créé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedecinResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/medecins/{id}": {
+            "get": {
+                "tags": [
+                    "Medecins"
+                ],
+                "summary": "Afficher un médecin",
+                "operationId": "5ebd2846ccca9c035cc953ad5031899a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedecinResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Medecins"
+                ],
+                "summary": "Mettre à jour un médecin",
+                "operationId": "38fac10969aba29329047e60cb79b4ab",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/MedecinUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedecinResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Medecins"
+                ],
+                "summary": "Supprimer un médecin",
+                "operationId": "425fec4c577209d013c0af879bdda906",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/medecins/{id}/statut": {
+            "patch": {
+                "tags": [
+                    "Medecins"
+                ],
+                "summary": "Changer le statut d'un médecin",
+                "operationId": "c91d2e419bea28be7033406fb817d1f9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StatutUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedecinResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/medecins/{id}/planning": {
+            "get": {
+                "tags": [
+                    "Medecins"
+                ],
+                "summary": "Planning d'un médecin",
+                "operationId": "93c898706052d4fc248acb918a98c991",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlanningResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/secretaires": {
+            "get": {
+                "tags": [
+                    "Secretaires"
+                ],
+                "summary": "Liste des secrétaires",
+                "operationId": "30150500de6399fabf3082078a3afb62",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "statut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SecretaireListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Secretaires"
+                ],
+                "summary": "Créer un secrétaire",
+                "operationId": "582f5b58e55a4a17f8d2fbec371928fe",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SecretaireCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Créé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SecretaireResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/secretaires/{id}": {
+            "get": {
+                "tags": [
+                    "Secretaires"
+                ],
+                "summary": "Afficher un secrétaire",
+                "operationId": "e3244a1976ed12ad8039ce51d3de0a30",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SecretaireResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Secretaires"
+                ],
+                "summary": "Supprimer un secrétaire",
+                "operationId": "0b56f9511958771abd7f80915e2538e1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/secretaires{id}": {
+            "put": {
+                "tags": [
+                    "Secretaires"
+                ],
+                "summary": "Mettre à jour un secrétaire",
+                "operationId": "8ef8cc84e322e3adc5b80816e033e700",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SecretaireUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SecretaireResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/secretaires/{id}/statut": {
+            "patch": {
+                "tags": [
+                    "Secretaires"
+                ],
+                "summary": "Changer le statut d'un secrétaire",
+                "operationId": "f4b82be9091d09c72b220da6c83b5d47",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/StatutUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SecretaireResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/services": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Liste des services",
+                "operationId": "0826b93a7d1d70b9c3047964d8d59844",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "statut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "specialite",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServiceListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Créer un service",
+                "operationId": "418eb8cff44b4a6be71988ef0fcd6f95",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ServiceCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Créé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServiceResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/services/{id}": {
+            "get": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Détail du service (avec médecins)",
+                "operationId": "c022b2bb04f2fcf5b5bb1e33f73b8dea",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServiceResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Mettre à jour un service",
+                "operationId": "e9f36cad221f8b813679238d15fd861c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ServiceUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServiceResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Services"
+                ],
+                "summary": "Supprimer un service",
+                "operationId": "2b772b224138cef55e7d1f5613a99429",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ServiceMini": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "9f8c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Cardiologie"
+                    }
+                },
+                "type": "object"
+            },
+            "Medecin": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "9f8c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    },
+                    "matricule": {
+                        "type": "string",
+                        "example": "MED-0001"
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Diop"
+                    },
+                    "prenom": {
+                        "type": "string",
+                        "example": "Awa"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "awa.diop@example.com"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "+221771234567"
+                    },
+                    "specialite": {
+                        "type": "string",
+                        "example": "Cardiologie"
+                    },
+                    "statut": {
+                        "type": "string",
+                        "example": "ACTIF"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "MEDECIN"
+                    },
+                    "first_login": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "service": {
+                        "$ref": "#/components/schemas/ServiceMini"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2024-01-01T10:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Secretaire": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "3f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    },
+                    "matricule": {
+                        "type": "string",
+                        "example": "SEC-0001"
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Ndiaye"
+                    },
+                    "prenom": {
+                        "type": "string",
+                        "example": "Fatou"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "fatou.ndiaye@example.com"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "+221781234567"
+                    },
+                    "statut": {
+                        "type": "string",
+                        "example": "ACTIF"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "SECRETAIRE"
+                    },
+                    "first_login": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "service": {
+                        "$ref": "#/components/schemas/ServiceMini"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2024-01-01T10:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "ServiceMedical": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "2f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Cardiologie"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Service de cardiologie"
+                    },
+                    "heure_ouverture": {
+                        "type": "string",
+                        "example": "08:00"
+                    },
+                    "heure_fermeture": {
+                        "type": "string",
+                        "example": "18:00"
+                    },
+                    "etat": {
+                        "type": "string",
+                        "example": "DISPONIBLE"
+                    },
+                    "medecins": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Medecin"
+                        }
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2024-01-01T10:00:00Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "example": "2024-01-01T10:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationMeta": {
+                "properties": {
+                    "current_page": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "per_page": {
+                        "type": "integer",
+                        "example": 15
+                    },
+                    "total": {
+                        "type": "integer",
+                        "example": 120
+                    },
+                    "last_page": {
+                        "type": "integer",
+                        "example": 8
+                    }
+                },
+                "type": "object"
+            },
+            "PaginationLinks": {
+                "properties": {
+                    "first": {
+                        "type": "string",
+                        "example": "http://localhost/api/v1/medecins?page=1",
+                        "nullable": true
+                    },
+                    "last": {
+                        "type": "string",
+                        "example": "http://localhost/api/v1/medecins?page=8",
+                        "nullable": true
+                    },
+                    "prev": {
+                        "type": "string",
+                        "example": null,
+                        "nullable": true
+                    },
+                    "next": {
+                        "type": "string",
+                        "example": "http://localhost/api/v1/medecins?page=2",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PaginatedMedecins": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Medecin"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationLinks"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginatedSecretaires": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Secretaire"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationLinks"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginatedServices": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ServiceMedical"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationLinks"
+                    }
+                },
+                "type": "object"
+            },
+            "ErrorResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Erreur"
+                    },
+                    "data": {
+                        "nullable": true
+                    },
+                    "errors": {
+                        "type": "object",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "MessageResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Opération réussie"
+                    },
+                    "data": {
+                        "nullable": true
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ActivationTokenResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Mot de passe mis à jour"
+                    },
+                    "data": {
+                        "properties": {
+                            "token": {
+                                "type": "string",
+                                "example": "1|abc123..."
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "MedecinResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Détail du médecin"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Medecin"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "MedecinListResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Liste des médecins"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PaginatedMedecins"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "SecretaireResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Détail du secrétaire"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Secretaire"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "SecretaireListResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Liste des secrétaires"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PaginatedSecretaires"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ServiceResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Détail du service"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/ServiceMedical"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ServiceListResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Liste des services"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PaginatedServices"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PlanningResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Planning du médecin"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "type": "object"
+                        }
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ActivationPasswordRequest": {
+                "required": [
+                    "token",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "token": {
+                        "type": "string",
+                        "example": "abc123"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password",
+                        "example": "P@ssw0rd!"
+                    },
+                    "password_confirmation": {
+                        "type": "string",
+                        "format": "password",
+                        "example": "P@ssw0rd!"
+                    }
+                },
+                "type": "object"
+            },
+            "MedecinCreateRequest": {
+                "required": [
+                    "nom",
+                    "prenom",
+                    "email",
+                    "telephone",
+                    "specialite",
+                    "service_medical_id"
+                ],
+                "properties": {
+                    "nom": {
+                        "type": "string",
+                        "example": "Diop"
+                    },
+                    "prenom": {
+                        "type": "string",
+                        "example": "Awa"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "awa.diop@example.com"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "771234567"
+                    },
+                    "specialite": {
+                        "type": "string",
+                        "example": "Cardiologie"
+                    },
+                    "service_medical_id": {
+                        "type": "string",
+                        "example": "2f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    }
+                },
+                "type": "object"
+            },
+            "MedecinUpdateRequest": {
+                "properties": {
+                    "nom": {
+                        "type": "string",
+                        "example": "Diop"
+                    },
+                    "prenom": {
+                        "type": "string",
+                        "example": "Awa"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "awa.diop@example.com"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "771234567"
+                    },
+                    "specialite": {
+                        "type": "string",
+                        "example": "Cardiologie"
+                    },
+                    "service_medical_id": {
+                        "type": "string",
+                        "example": "2f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    }
+                },
+                "type": "object"
+            },
+            "SecretaireCreateRequest": {
+                "required": [
+                    "nom",
+                    "prenom",
+                    "email",
+                    "telephone",
+                    "service_medical_id"
+                ],
+                "properties": {
+                    "nom": {
+                        "type": "string",
+                        "example": "Ndiaye"
+                    },
+                    "prenom": {
+                        "type": "string",
+                        "example": "Fatou"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "fatou.ndiaye@example.com"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "781234567"
+                    },
+                    "service_medical_id": {
+                        "type": "string",
+                        "example": "2f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    }
+                },
+                "type": "object"
+            },
+            "SecretaireUpdateRequest": {
+                "properties": {
+                    "nom": {
+                        "type": "string",
+                        "example": "Ndiaye"
+                    },
+                    "prenom": {
+                        "type": "string",
+                        "example": "Fatou"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "fatou.ndiaye@example.com"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "781234567"
+                    },
+                    "service_medical_id": {
+                        "type": "string",
+                        "example": "2f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    }
+                },
+                "type": "object"
+            },
+            "ServiceCreateRequest": {
+                "required": [
+                    "nom",
+                    "heure_ouverture",
+                    "heure_fermeture"
+                ],
+                "properties": {
+                    "nom": {
+                        "type": "string",
+                        "example": "Cardiologie"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Service de cardiologie"
+                    },
+                    "heure_ouverture": {
+                        "type": "string",
+                        "example": "08:00"
+                    },
+                    "heure_fermeture": {
+                        "type": "string",
+                        "example": "18:00"
+                    },
+                    "etat": {
+                        "type": "string",
+                        "example": "DISPONIBLE"
+                    }
+                },
+                "type": "object"
+            },
+            "ServiceUpdateRequest": {
+                "properties": {
+                    "nom": {
+                        "type": "string",
+                        "example": "Cardiologie"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Service de cardiologie"
+                    },
+                    "heure_ouverture": {
+                        "type": "string",
+                        "example": "08:00"
+                    },
+                    "heure_fermeture": {
+                        "type": "string",
+                        "example": "18:00"
+                    },
+                    "etat": {
+                        "type": "string",
+                        "example": "DISPONIBLE"
+                    }
+                },
+                "type": "object"
+            },
+            "StatutUpdateRequest": {
+                "required": [
+                    "statut"
+                ],
+                "properties": {
+                    "statut": {
+                        "type": "string",
+                        "enum": [
+                            "ACTIF",
+                            "INACTIF",
+                            "ENCONGE"
+                        ]
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Activation",
+            "description": "Activation"
+        },
+        {
+            "name": "Admin",
+            "description": "Admin"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Medecins",
+            "description": "Medecins"
+        },
+        {
+            "name": "Secretaires",
+            "description": "Secretaires"
+        },
+        {
+            "name": "Services",
+            "description": "Services"
+        }
+    ]
+}

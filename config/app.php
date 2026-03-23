@@ -143,6 +143,8 @@ return [
         'driver' => 'file',
         // 'store' => 'redis',
     ],
+    'encryption_key' => env('ENCRYPTION_KEY'),
+
 
     /*
     |--------------------------------------------------------------------------
