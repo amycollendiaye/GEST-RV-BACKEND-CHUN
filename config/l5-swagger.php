@@ -312,19 +312,23 @@ return [
          * Constants which can be used in annotations
          */
         'constants' => [
-            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', rtrim(env('APP_URL', 'http://localhost'), '/')),
+            'L5_SWAGGER_CONST_HOST' => (static function (): string {
+                // Determine host based on environment
+                if (config('app.env') === 'local') {
+                    return 'http://127.0.0.1:8000';
+                } else {
+                    return 'https://gest-rv-backend-chun.onrender.com';
+                }
+            })(),
             'L5_SWAGGER_CONST_SERVER_URL' => (static function (): string {
-                $serverUrl = (string) env('L5_SWAGGER_CONST_SERVER_URL', env('L5_SWAGGER_API_PREFIX', '/api/v1'));
-
-                if ($serverUrl === '') {
-                    return '/api/v1';
+                // Determine server URL based on environment
+                if (config('app.env') === 'local') {
+                    // Local environment
+                    return 'http://127.0.0.1:8000';
+                } else {
+                    // Production environment
+                    return 'https://gest-rv-backend-chun.onrender.com';
                 }
-
-                if (! str_starts_with($serverUrl, 'http://') && ! str_starts_with($serverUrl, 'https://')) {
-                    return '/' . ltrim($serverUrl, '/');
-                }
-
-                return rtrim($serverUrl, '/');
             })(),
         ],
     ],
