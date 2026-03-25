@@ -13,6 +13,8 @@ class RendezVous extends Model
     use HasUuids;
     use SoftDeletes;
 
+    public ?array $auditContext = null;
+
     protected $table = 'rendez_vous';
 
     protected $keyType = 'string';

@@ -38,7 +38,14 @@ class RendezVousRepository implements RendezVousRepositoryInterface
 
     public function create(array $data): RendezVous
     {
-        return RendezVous::create($data)->load(['patient', 'serviceMedical', 'medecin', 'planningMedecin']);
+        $auditContext = $data['audit_context'] ?? null;
+        unset($data['audit_context']);
+
+        $rendezVous = new RendezVous($data);
+        $rendezVous->auditContext = is_array($auditContext) ? $auditContext : null;
+        $rendezVous->save();
+
+        return $rendezVous->load(['patient', 'serviceMedical', 'medecin', 'planningMedecin']);
     }
 
     public function update(string $id, array $data): RendezVous

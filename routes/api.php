@@ -7,12 +7,16 @@ use App\Http\Controllers\Api\AttributionRendezVousController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ConsultationController;
 use App\Http\Controllers\Api\DossierMedicalController;
+use App\Http\Controllers\Api\JournalAuditController;
 use App\Http\Controllers\Api\MedecinController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\PlanningMedecinController;
 use App\Http\Controllers\Api\RendezVousController;
 use App\Http\Controllers\Api\SecretaireController;
 use App\Http\Controllers\Api\ServiceMedicalController;
+use App\Http\Controllers\Api\StatistiquesAdminController;
+use App\Http\Controllers\Api\StatistiquesMedecinController;
+use App\Http\Controllers\Api\StatistiquesSecretaireController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,14 +30,22 @@ use App\Http\Controllers\Api\ServiceMedicalController;
 */
 
 Route::post('/admin/register', [AdminController::class, 'register']);
-Route::post('/auth/login', [AuthController::class, 'login']);
+Route::post('/auth/login', [AuthController::class, 'login'])->middleware('journal.auth');
 Route::post('/auth/change-password', [AuthController::class, 'changePassword']);
 
 Route::get('/activation', [ActivationController::class, 'validateToken']);
 Route::post('/activation/password', [ActivationController::class, 'updatePassword']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/auth/logout', [AuthController::class, 'logout']);
+    Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('journal.auth');
+
+    Route::get('/journal/export', [JournalAuditController::class, 'export']);
+    Route::get('/journal', [JournalAuditController::class, 'index']);
+    Route::get('/journal/{id}', [JournalAuditController::class, 'show']);
+
+    Route::get('/statistiques/admin', StatistiquesAdminController::class);
+    Route::get('/statistiques/medecin', StatistiquesMedecinController::class);
+    Route::get('/statistiques/secretaire', StatistiquesSecretaireController::class);
 
     Route::post('/plannings', [PlanningMedecinController::class, 'store']);
     Route::get('/plannings/mes-plannings', [PlanningMedecinController::class, 'mesPlannings']);

@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\JournalAudit;
+use App\Models\PersonelHopital;
 use App\Models\ServiceMedical;
 use App\Policies\ConsultationPolicy;
 use App\Policies\DossierMedicalPolicy;
+use App\Policies\JournalAuditPolicy;
 use App\Policies\MedecinPolicy;
 use App\Policies\PatientPolicy;
 use App\Policies\PlanningMedecinPolicy;
@@ -12,6 +15,7 @@ use App\Policies\RendezVousPolicy;
 use App\Policies\SecretairePolicy;
 use App\Policies\ServiceMedicalPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
@@ -23,6 +27,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         ServiceMedical::class => ServiceMedicalPolicy::class,
+        JournalAudit::class => JournalAuditPolicy::class,
     ];
 
     /**
@@ -30,6 +35,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->registerPolicies();
+
         Gate::define('medecin.viewAny', [MedecinPolicy::class, 'viewAny']);
         Gate::define('medecin.view', [MedecinPolicy::class, 'view']);
         Gate::define('medecin.create', [MedecinPolicy::class, 'create']);
@@ -77,5 +84,27 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('consultation.update', [ConsultationPolicy::class, 'update']);
         Gate::define('consultation.cloturer', [ConsultationPolicy::class, 'cloturer']);
         Gate::define('consultation.reprogrammer', [ConsultationPolicy::class, 'reprogrammer']);
+
+        Gate::define('journal.viewAny', [JournalAuditPolicy::class, 'viewAny']);
+        Gate::define('journal.view', [JournalAuditPolicy::class, 'view']);
+        Gate::define('journal.export', [JournalAuditPolicy::class, 'export']);
+
+        Gate::define('statistiques.admin', function (PersonelHopital $user): Response {
+            return $user->role === 'ADMIN'
+                ? Response::allow()
+                : Response::deny('Seul l\'administrateur peut accéder à ce tableau de bord.');
+        });
+
+        Gate::define('statistiques.medecin', function (PersonelHopital $user): Response {
+            return $user->role === 'MEDECIN'
+                ? Response::allow()
+                : Response::deny('Seul un médecin peut accéder à ce tableau de bord.');
+        });
+
+        Gate::define('statistiques.secretaire', function (PersonelHopital $user): Response {
+            return $user->role === 'SECRETAIRE'
+                ? Response::allow()
+                : Response::deny('Seule une secrétaire peut accéder à ce tableau de bord.');
+        });
     }
 }

@@ -13,6 +13,8 @@ class Consultation extends Model
     use HasUuids;
     use SoftDeletes;
 
+    public bool $wasReprogrammed = false;
+
     protected $table = 'consultations';
 
     protected $keyType = 'string';

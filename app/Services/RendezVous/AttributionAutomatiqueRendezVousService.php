@@ -58,6 +58,7 @@ class AttributionAutomatiqueRendezVousService
             'date_rendez_vous' => $dateRendezVous,
             'motif' => $data['motif'],
             'statut' => 'PLANIFIER',
+            'audit_context' => $data['audit_context'] ?? null,
         ])->load(['patient', 'medecin', 'serviceMedical', 'planningMedecin']);
     }
 

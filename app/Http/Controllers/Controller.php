@@ -659,6 +659,86 @@ use Illuminate\Routing\Controller as BaseController;
  *     required={"statut"},
  *     @OA\Property(property="statut", type="string", enum={"ACTIF","INACTIF","ENCONGE"})
  * )
+ * @OA\Schema(
+ *     schema="JournalAuditAuteur",
+ *     type="object",
+ *     nullable=true,
+ *     @OA\Property(property="id", type="string", example="9f8c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"),
+ *     @OA\Property(property="nom", type="string", example="Diop"),
+ *     @OA\Property(property="prenom", type="string", example="Awa"),
+ *     @OA\Property(property="matricule", type="string", example="MED-0001"),
+ *     @OA\Property(property="role", type="string", example="ADMIN")
+ * )
+ * @OA\Schema(
+ *     schema="JournalAudit",
+ *     type="object",
+ *     @OA\Property(property="id", type="integer", example=125),
+ *     @OA\Property(property="type_action", type="string", example="CREATIONRV"),
+ *     @OA\Property(
+ *         property="details",
+ *         type="object",
+ *         additionalProperties=true,
+ *         example={
+ *             "matricule_patient":"PAT-FANN-2026-0001",
+ *             "nom_patient":"Moussa Ba",
+ *             "service_nom":"Cardiologie",
+ *             "date_rendez_vous":"2026-04-10",
+ *             "heure_approximative":"09:00:00",
+ *             "medecin_nom":"Awa Diop"
+ *         }
+ *     ),
+ *     @OA\Property(property="adresse_ip", type="string", nullable=true, example="127.0.0.1"),
+ *     @OA\Property(property="user_agent", type="string", nullable=true, example="Mozilla/5.0"),
+ *     @OA\Property(property="auteur", ref="#/components/schemas/JournalAuditAuteur"),
+ *     @OA\Property(property="created_at", type="string", example="25/03/2026 14:30:00")
+ * )
+ * @OA\Schema(
+ *     schema="PaginatedJournalAudits",
+ *     type="object",
+ *     @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/JournalAudit")),
+ *     @OA\Property(property="meta", ref="#/components/schemas/PaginationMeta"),
+ *     @OA\Property(property="links", ref="#/components/schemas/PaginationLinks")
+ * )
+ * @OA\Schema(
+ *     schema="JournalAuditResponse",
+ *     type="object",
+ *     @OA\Property(property="success", type="boolean", example=true),
+ *     @OA\Property(property="message", type="string", example="Détail du journal d'audit"),
+ *     @OA\Property(property="data", ref="#/components/schemas/JournalAudit"),
+ *     @OA\Property(property="errors", nullable=true)
+ * )
+ * @OA\Schema(
+ *     schema="JournalAuditListResponse",
+ *     type="object",
+ *     @OA\Property(property="success", type="boolean", example=true),
+ *     @OA\Property(property="message", type="string", example="Liste des journaux d'audit"),
+ *     @OA\Property(property="data", ref="#/components/schemas/PaginatedJournalAudits"),
+ *     @OA\Property(property="errors", nullable=true)
+ * )
+ * @OA\Schema(
+ *     schema="StatistiquesAdminResponse",
+ *     type="object",
+ *     @OA\Property(property="success", type="boolean", example=true),
+ *     @OA\Property(property="message", type="string", example="Statistiques administrateur"),
+ *     @OA\Property(property="data", type="object", additionalProperties=true),
+ *     @OA\Property(property="errors", nullable=true)
+ * )
+ * @OA\Schema(
+ *     schema="StatistiquesMedecinResponse",
+ *     type="object",
+ *     @OA\Property(property="success", type="boolean", example=true),
+ *     @OA\Property(property="message", type="string", example="Statistiques médecin"),
+ *     @OA\Property(property="data", type="object", additionalProperties=true),
+ *     @OA\Property(property="errors", nullable=true)
+ * )
+ * @OA\Schema(
+ *     schema="StatistiquesSecretaireResponse",
+ *     type="object",
+ *     @OA\Property(property="success", type="boolean", example=true),
+ *     @OA\Property(property="message", type="string", example="Statistiques secrétaire"),
+ *     @OA\Property(property="data", type="object", additionalProperties=true),
+ *     @OA\Property(property="errors", nullable=true)
+ * )
  */
 class Controller extends BaseController
 {

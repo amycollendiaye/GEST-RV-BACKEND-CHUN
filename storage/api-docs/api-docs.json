@@ -1222,6 +1222,297 @@
                 ]
             }
         },
+        "/api/v1/journal": {
+            "get": {
+                "tags": [
+                    "Journal Audit"
+                ],
+                "summary": "Lister les journaux d'audit",
+                "operationId": "335010825589a42f4c3a8cd74d61f076",
+                "parameters": [
+                    {
+                        "name": "type_action",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "personel_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_debut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "date_fin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "adresse_ip",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 50,
+                            "maximum": 200
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "created_at"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des journaux d'audit",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JournalAuditListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Accès interdit",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/journal/{id}": {
+            "get": {
+                "tags": [
+                    "Journal Audit"
+                ],
+                "summary": "Afficher le détail d'un journal d'audit",
+                "operationId": "c6199dea832567f0a33e2b765231c692",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Détail du journal d'audit",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/JournalAuditResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Accès interdit",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Journal introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/journal/export": {
+            "get": {
+                "tags": [
+                    "Journal Audit"
+                ],
+                "summary": "Exporter les journaux d'audit en CSV",
+                "operationId": "68eb3e10dea6a78e3dc8ebabd38cbc0d",
+                "parameters": [
+                    {
+                        "name": "type_action",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "personel_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_debut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "date_fin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "adresse_ip",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fichier CSV généré",
+                        "content": {
+                            "text/csv": {}
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Accès interdit",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/medecins": {
             "get": {
                 "tags": [
@@ -4085,6 +4376,144 @@
                     }
                 ]
             }
+        },
+        "/api/v1/statistiques/admin": {
+            "get": {
+                "tags": [
+                    "Statistiques"
+                ],
+                "summary": "Récupérer le tableau de bord administrateur",
+                "operationId": "279aa2a7aa203ef3847cb51d57de5433",
+                "responses": {
+                    "200": {
+                        "description": "Statistiques administrateur",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatistiquesAdminResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Accès interdit",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/statistiques/medecin": {
+            "get": {
+                "tags": [
+                    "Statistiques"
+                ],
+                "summary": "Récupérer le tableau de bord médecin",
+                "operationId": "1ed4ef079a4c8f5a3c96461e418f8320",
+                "responses": {
+                    "200": {
+                        "description": "Statistiques médecin",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatistiquesMedecinResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Accès interdit",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/statistiques/secretaire": {
+            "get": {
+                "tags": [
+                    "Statistiques"
+                ],
+                "summary": "Récupérer le tableau de bord secrétaire",
+                "operationId": "3a66e8b392ff1a0a91c746628df26155",
+                "responses": {
+                    "200": {
+                        "description": "Statistiques secrétaire",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/StatistiquesSecretaireResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Accès interdit",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -5772,6 +6201,189 @@
                     }
                 },
                 "type": "object"
+            },
+            "JournalAuditAuteur": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "9f8c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Diop"
+                    },
+                    "prenom": {
+                        "type": "string",
+                        "example": "Awa"
+                    },
+                    "matricule": {
+                        "type": "string",
+                        "example": "MED-0001"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "ADMIN"
+                    }
+                },
+                "type": "object",
+                "nullable": true
+            },
+            "JournalAudit": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 125
+                    },
+                    "type_action": {
+                        "type": "string",
+                        "example": "CREATIONRV"
+                    },
+                    "details": {
+                        "type": "object",
+                        "example": {
+                            "matricule_patient": "PAT-FANN-2026-0001",
+                            "nom_patient": "Moussa Ba",
+                            "service_nom": "Cardiologie",
+                            "date_rendez_vous": "2026-04-10",
+                            "heure_approximative": "09:00:00",
+                            "medecin_nom": "Awa Diop"
+                        },
+                        "additionalProperties": true
+                    },
+                    "adresse_ip": {
+                        "type": "string",
+                        "example": "127.0.0.1",
+                        "nullable": true
+                    },
+                    "user_agent": {
+                        "type": "string",
+                        "example": "Mozilla/5.0",
+                        "nullable": true
+                    },
+                    "auteur": {
+                        "$ref": "#/components/schemas/JournalAuditAuteur"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "25/03/2026 14:30:00"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginatedJournalAudits": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JournalAudit"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationLinks"
+                    }
+                },
+                "type": "object"
+            },
+            "JournalAuditResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Détail du journal d'audit"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/JournalAudit"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "JournalAuditListResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Liste des journaux d'audit"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PaginatedJournalAudits"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "StatistiquesAdminResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Statistiques administrateur"
+                    },
+                    "data": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "StatistiquesMedecinResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Statistiques médecin"
+                    },
+                    "data": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "StatistiquesSecretaireResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Statistiques secrétaire"
+                    },
+                    "data": {
+                        "type": "object",
+                        "additionalProperties": true
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
             }
         },
         "securitySchemes": {
@@ -5808,6 +6420,10 @@
             "description": "Dossiers"
         },
         {
+            "name": "Journal Audit",
+            "description": "Journal Audit"
+        },
+        {
             "name": "Medecins",
             "description": "Medecins"
         },
@@ -5826,6 +6442,10 @@
         {
             "name": "Services",
             "description": "Services"
+        },
+        {
+            "name": "Statistiques",
+            "description": "Statistiques"
         }
     ]
 }
