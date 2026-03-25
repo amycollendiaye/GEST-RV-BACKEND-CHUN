@@ -94,6 +94,11 @@ return [
             'base' => env('L5_SWAGGER_BASE_PATH', null),
 
             /*
+             * Override server URL for swagger (useful for production to override APP_URL)
+             */
+            'server_url_override' => env('L5_SWAGGER_SERVER_URL_OVERRIDE', ''),
+
+            /*
              * Absolute path to directories that should be excluded from scanning
              * @deprecated Please use `scanOptions.exclude`
              * `scanOptions.exclude` overwrites this
@@ -313,22 +318,38 @@ return [
          */
         'constants' => [
             'L5_SWAGGER_CONST_HOST' => (static function (): string {
-                // Determine host based on environment
-                if (config('app.env') === 'local') {
-                    return 'http://127.0.0.1:8000';
-                } else {
-                    return 'https://gest-rv-backend-chun.onrender.com';
+                // Allow override via explicit config (uses config() not env() for cache compatibility)
+                $overrideUrl = config('l5-swagger.server_url_override');
+                if (!empty($overrideUrl)) {
+                    return rtrim($overrideUrl, '/');
                 }
+                
+                $appUrl = config('app.url', '');
+                
+                // If APP_URL contains 127.0.0.1 or localhost, use local server
+                if (str_contains($appUrl, '127.0.0.1') || str_contains($appUrl, 'localhost')) {
+                    return 'http://127.0.0.1:8000';
+                }
+                
+                // Production: use the production server
+                return 'https://gest-rv-backend-chun.onrender.com';
             })(),
             'L5_SWAGGER_CONST_SERVER_URL' => (static function (): string {
-                // Determine server URL based on environment
-                if (config('app.env') === 'local') {
-                    // Local environment
-                    return 'http://127.0.0.1:8000';
-                } else {
-                    // Production environment
-                    return 'https://gest-rv-backend-chun.onrender.com';
+                // Allow override via explicit config
+                $overrideUrl = config('l5-swagger.server_url_override');
+                if (!empty($overrideUrl)) {
+                    return rtrim($overrideUrl, '/');
                 }
+                
+                $appUrl = config('app.url', '');
+                
+                // If APP_URL contains 127.0.0.1 or localhost, use local server
+                if (str_contains($appUrl, '127.0.0.1') || str_contains($appUrl, 'localhost')) {
+                    return 'http://127.0.0.1:8000';
+                }
+                
+                // Production: use the production server
+                return 'https://gest-rv-backend-chun.onrender.com';
             })(),
         ],
     ],
