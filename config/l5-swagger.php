@@ -314,25 +314,17 @@ return [
         'constants' => [
             'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', rtrim(env('APP_URL', 'http://localhost'), '/')),
             'L5_SWAGGER_CONST_SERVER_URL' => (static function (): string {
-                $appEnv = env('APP_ENV');
-                $appUrl = rtrim((string) env('APP_URL', ''), '/');
-                $defaultUrl = $appEnv === 'production'
-                    ? 'https://gest-rv-backend-chun.onrender.com'
-                    : 'http://localhost';
+                $serverUrl = (string) env('L5_SWAGGER_CONST_SERVER_URL', env('L5_SWAGGER_API_PREFIX', '/api/v1'));
 
-                $resolvedUrl = $appUrl;
-
-                if ($resolvedUrl === '' || ($appEnv === 'production' && in_array($resolvedUrl, [
-                    'http://localhost',
-                    'http://127.0.0.1',
-                    'http://localhost:8000',
-                    'http://127.0.0.1:8000',
-                ], true))) {
-                    $resolvedUrl = $defaultUrl;
+                if ($serverUrl === '') {
+                    return '/api/v1';
                 }
 
-                return rtrim(env('L5_SWAGGER_CONST_SERVER_URL', $resolvedUrl), '/')
-                    . env('L5_SWAGGER_API_PREFIX', '/api/v1');
+                if (! str_starts_with($serverUrl, 'http://') && ! str_starts_with($serverUrl, 'https://')) {
+                    return '/' . ltrim($serverUrl, '/');
+                }
+
+                return rtrim($serverUrl, '/');
             })(),
         ],
     ],
