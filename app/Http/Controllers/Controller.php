@@ -88,10 +88,10 @@ use Illuminate\Routing\Controller as BaseController;
  * @OA\Schema(
  *     schema="PaginationLinks",
  *     type="object",
- *     @OA\Property(property="first", type="string", nullable=true, example="http://localhost/api/v1/medecins?page=1"),
- *     @OA\Property(property="last", type="string", nullable=true, example="http://localhost/api/v1/medecins?page=8"),
+ *     @OA\Property(property="first", type="string", nullable=true, example="/api/v1/medecins?page=1"),
+ *     @OA\Property(property="last", type="string", nullable=true, example="/api/v1/medecins?page=8"),
  *     @OA\Property(property="prev", type="string", nullable=true, example=null),
- *     @OA\Property(property="next", type="string", nullable=true, example="http://localhost/api/v1/medecins?page=2")
+ *     @OA\Property(property="next", type="string", nullable=true, example="/api/v1/medecins?page=2")
  * )
  * @OA\Schema(
  *     schema="PaginatedMedecins",

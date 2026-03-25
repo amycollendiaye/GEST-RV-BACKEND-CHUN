@@ -318,37 +318,42 @@ return [
          */
         'constants' => [
             'L5_SWAGGER_CONST_HOST' => (static function (): string {
-                // Allow override via explicit config (uses config() not env() for cache compatibility)
-                $overrideUrl = config('l5-swagger.server_url_override');
-                if (!empty($overrideUrl)) {
+                // Check for explicit override first
+                $overrideUrl = (string) config('l5-swagger.defaults.paths.server_url_override', '');
+                if ($overrideUrl !== '') {
                     return rtrim($overrideUrl, '/');
                 }
+
+                // Use APP_URL as the host
+                $appUrl = config('app.url', 'http://localhost');
                 
-                $appUrl = config('app.url', '');
-                
-                // If APP_URL contains 127.0.0.1 or localhost, use local server
+                // If APP_URL contains localhost or 127.0.0.1, use local server
                 if (str_contains($appUrl, '127.0.0.1') || str_contains($appUrl, 'localhost')) {
                     return 'http://127.0.0.1:8000';
                 }
                 
-                // Production: use the production server
+                // Production - use the production server
                 return 'https://gest-rv-backend-chun.onrender.com';
             })(),
             'L5_SWAGGER_CONST_SERVER_URL' => (static function (): string {
-                // Allow override via explicit config
-                $overrideUrl = config('l5-swagger.server_url_override');
-                if (!empty($overrideUrl)) {
+                // Check for explicit override first
+                $overrideUrl = (string) config('l5-swagger.defaults.paths.server_url_override', '');
+                if ($overrideUrl !== '') {
+                    if (! str_starts_with($overrideUrl, 'http://') && ! str_starts_with($overrideUrl, 'https://')) {
+                        return '/' . ltrim($overrideUrl, '/');
+                    }
                     return rtrim($overrideUrl, '/');
                 }
+
+                // Use APP_URL as the server
+                $appUrl = config('app.url', 'http://localhost');
                 
-                $appUrl = config('app.url', '');
-                
-                // If APP_URL contains 127.0.0.1 or localhost, use local server
+                // If APP_URL contains localhost or 127.0.0.1, use local server
                 if (str_contains($appUrl, '127.0.0.1') || str_contains($appUrl, 'localhost')) {
                     return 'http://127.0.0.1:8000';
                 }
                 
-                // Production: use the production server
+                // Production - use the production server
                 return 'https://gest-rv-backend-chun.onrender.com';
             })(),
         ],

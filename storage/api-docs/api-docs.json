@@ -4696,12 +4696,12 @@
                 "properties": {
                     "first": {
                         "type": "string",
-                        "example": "http://localhost/api/v1/medecins?page=1",
+                        "example": "/api/v1/medecins?page=1",
                         "nullable": true
                     },
                     "last": {
                         "type": "string",
-                        "example": "http://localhost/api/v1/medecins?page=8",
+                        "example": "/api/v1/medecins?page=8",
                         "nullable": true
                     },
                     "prev": {
@@ -4711,7 +4711,7 @@
                     },
                     "next": {
                         "type": "string",
-                        "example": "http://localhost/api/v1/medecins?page=2",
+                        "example": "/api/v1/medecins?page=2",
                         "nullable": true
                     }
                 },
