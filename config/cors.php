@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['POST',"GET","PUT","DELETE","PATCH","OPTIONS"],
 
-    'allowed_origins' => ['http://localhost:8000', 'http://127.0.0.1:8000', "https://amycolle-ompay.onrender.com",'http://localhost:8080', ],
+    'allowed_origins' => ['http://localhost:8000', 'http://127.0.0.1:8000', "https://gest-rv-backend-chun.onrender.com",'http://localhost:8080', ],
 
     'allowed_origins_patterns' => [],
 
