@@ -17,6 +17,10 @@ class ServiceMedicalRepository implements ServiceMedicalRepositoryInterface
             $query->where('nom', 'like', "%{$term}%");
         }
 
+        if (!empty($filters['etat'])) {
+            $query->where('etat', $filters['etat']);
+        }
+
         $sortBy = $filters['sort_by'] ?? 'created_at';
         $sortDir = $filters['sort_dir'] ?? 'desc';
 

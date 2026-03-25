@@ -192,6 +192,200 @@
                 }
             }
         },
+        "/api/v1/rendez-vous": {
+            "get": {
+                "tags": [
+                    "RendezVous"
+                ],
+                "summary": "Liste des rendez-vous",
+                "operationId": "b428aeec440f6a144835a9c37eee92fc",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "statut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "medecin_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_debut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_fin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RendezVousListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "RendezVous"
+                ],
+                "summary": "Creer un rendez-vous avec attribution automatique",
+                "operationId": "a67ef42231f92b4b6dee5c3cad4390be",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RendezVousCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cree",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RendezVousResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acces refuse",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Aucun creneau disponible",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflit metier",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur de validation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/v1/auth/login": {
             "post": {
                 "tags": [
@@ -366,6 +560,652 @@
                     },
                     "401": {
                         "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/consultations": {
+            "get": {
+                "tags": [
+                    "Consultations"
+                ],
+                "summary": "Liste des consultations",
+                "operationId": "7249264c980cd71235d7e4bf495e3fcf",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "statut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "medecin_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_debut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_fin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConsultationListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Consultations"
+                ],
+                "summary": "Créer une consultation",
+                "operationId": "a9a1a44533a2e508386766b9ac5e5ba8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConsultationCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Créé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConsultationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/consultations/{id}": {
+            "get": {
+                "tags": [
+                    "Consultations"
+                ],
+                "summary": "Détail d'une consultation",
+                "operationId": "22a4e3283580feace4ad1c526f925dd1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConsultationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Consultations"
+                ],
+                "summary": "Mettre à jour une consultation",
+                "operationId": "3d80c73917beebe343f0a552e1430dd9",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConsultationUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConsultationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/consultations/{id}/cloturer": {
+            "patch": {
+                "tags": [
+                    "Consultations"
+                ],
+                "summary": "Cloturer une consultation",
+                "operationId": "3ddb4b94dca0d88592c012ff8125a25e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConsultationClotureRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConsultationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acces refuse",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur de validation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/consultations/{id}/reprogrammer": {
+            "patch": {
+                "tags": [
+                    "Consultations"
+                ],
+                "summary": "Reprogrammer un rendez-vous de suivi",
+                "operationId": "35249f4a569d7d8497af362a160f393c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RendezVousReprogrammationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConsultationReprogrammationResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acces refuse",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur de validation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/dossiers/{id}": {
+            "get": {
+                "tags": [
+                    "Dossiers"
+                ],
+                "summary": "Consulter un dossier médical",
+                "operationId": "77d4db45fe152f8942688d7f44581fe5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DossierMedicalResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Dossiers"
+                ],
+                "summary": "Mettre à jour un dossier médical",
+                "operationId": "2d2d05eeb845029010ed5df50d2cfda6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DossierMedicalUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DossierMedicalResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -830,6 +1670,1672 @@
                     },
                     "404": {
                         "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/patients": {
+            "get": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Liste des patients",
+                "operationId": "69a46ed96bac75dd121e6dc98a33c34e",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "statut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "medecin_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_debut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_fin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PatientListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Créer un patient",
+                "operationId": "ba689ca69bc6286a99ce90c5eb6f868c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatientCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Créé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PatientResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/patients/{id}": {
+            "get": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Détail d'un patient",
+                "operationId": "514d5adfebfd677bbd79e439d5abfad6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PatientResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Mettre à jour un patient",
+                "operationId": "de2bde6104fcd457e916b138042ef077",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatientUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PatientResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Supprimer un patient",
+                "operationId": "cdec4131c169cec76d16ca8b9b1ccb8e",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/patients/mon-profil": {
+            "get": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Profil du patient connecté",
+                "operationId": "3ef076942eea7421bc75816c4d7e60f2",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PatientResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/patients/mon-dossier": {
+            "get": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Dossier médical du patient connecté",
+                "operationId": "15932d8668210bcea2ac07cbddb0d1d0",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DossierMedicalResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/patients/{id}/rendez-vous": {
+            "get": {
+                "tags": [
+                    "Patients"
+                ],
+                "summary": "Liste des rendez-vous d'un patient",
+                "operationId": "f5f1aae53f4d83f851fb207ada2d7f06",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "statut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "medecin_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_debut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_fin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RendezVousListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/plannings": {
+            "get": {
+                "tags": [
+                    "Plannings"
+                ],
+                "summary": "Lister tous les plannings",
+                "operationId": "b225d15529a0f96385d481c81faacadc",
+                "parameters": [
+                    {
+                        "name": "date_debut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "date_fin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "medecin_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "disponible",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlanningMedecinListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acces refuse",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Plannings"
+                ],
+                "summary": "Creer un planning medecin",
+                "operationId": "5f302087e65ba26576366717ce87ba51",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PlanningMedecinCreateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Cree",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlanningMedecinResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acces refuse",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Planning deja existant",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur de validation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/plannings/mes-plannings": {
+            "get": {
+                "tags": [
+                    "Plannings"
+                ],
+                "summary": "Lister les plannings du medecin connecte",
+                "operationId": "7634579f6b7826cc69d60a3a643b02a1",
+                "parameters": [
+                    {
+                        "name": "date_debut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "date_fin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "medecin_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "disponible",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlanningMedecinListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acces refuse",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/plannings/{id}": {
+            "get": {
+                "tags": [
+                    "Plannings"
+                ],
+                "summary": "Detail d un planning",
+                "operationId": "5fa6177d946cf53f7ab06e1f3721cd04",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlanningMedecinResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acces refuse",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Plannings"
+                ],
+                "summary": "Modifier un planning",
+                "operationId": "4b25a8d469d7e488286d25bf4a9d60b0",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PlanningMedecinUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PlanningMedecinResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acces refuse",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflit metier",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erreur de validation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Plannings"
+                ],
+                "summary": "Supprimer un planning",
+                "operationId": "d3168c89c8939b753e9ec166359a5251",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acces refuse",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Planning non modifiable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/plannings/{id}/rendez-vous": {
+            "get": {
+                "tags": [
+                    "Plannings"
+                ],
+                "summary": "Lister les rendez-vous d un planning",
+                "operationId": "d8ce08bf5318fda547eacbe526ff55fc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RendezVousListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifie",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Acces refuse",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/rendez-vous/{id}": {
+            "get": {
+                "tags": [
+                    "RendezVous"
+                ],
+                "summary": "Détail d'un rendez-vous",
+                "operationId": "1b52aa37ffe5a9d96266bebe892bedcc",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RendezVousResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/rendez-vous/mes-rendez-vous": {
+            "get": {
+                "tags": [
+                    "RendezVous"
+                ],
+                "summary": "Liste des rendez-vous du patient connecté",
+                "operationId": "b3f2dac99708e64691f832a3e75c2d9e",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "statut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "medecin_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_debut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_fin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RendezVousListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/rendez-vous/{id}/annuler": {
+            "patch": {
+                "tags": [
+                    "RendezVous"
+                ],
+                "summary": "Annuler un rendez-vous",
+                "operationId": "4a6948368e94619c11a5b02d6c085fc4",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RendezVousResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Annulation impossible",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/rendez-vous/{id}/statut": {
+            "patch": {
+                "tags": [
+                    "RendezVous"
+                ],
+                "summary": "Changer le statut d'un rendez-vous",
+                "operationId": "f757a099f4d77a0aa5f71981369a89bb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RendezVousStatutUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RendezVousResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/services/disponibles": {
+            "get": {
+                "tags": [
+                    "RendezVous"
+                ],
+                "summary": "Liste des services médicaux disponibles",
+                "operationId": "e0411af3fbe4713c0c0df894389da907",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "statut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "service_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "medecin_id",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_debut",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "date_fin",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort_dir",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ServiceListResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1836,6 +4342,523 @@
                 },
                 "type": "object"
             },
+            "Patient": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "7f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    },
+                    "matricule": {
+                        "type": "string",
+                        "example": "PAT-FANN-2026-0001"
+                    },
+                    "nom": {
+                        "type": "string",
+                        "example": "Ba"
+                    },
+                    "prenom": {
+                        "type": "string",
+                        "example": "Moussa"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "moussa.ba@example.com"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "771234567"
+                    },
+                    "date_naissance": {
+                        "type": "string",
+                        "example": "1990-05-12"
+                    },
+                    "statut": {
+                        "type": "string",
+                        "example": "ACTIF"
+                    },
+                    "first_login": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2024-01-01T10:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginatedPatients": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Patient"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationLinks"
+                    }
+                },
+                "type": "object"
+            },
+            "RendezVous": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "5f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    },
+                    "motif": {
+                        "type": "string",
+                        "example": "Douleurs thoraciques"
+                    },
+                    "statut": {
+                        "type": "string",
+                        "example": "PLANIFIER"
+                    },
+                    "planning_medecin_id": {
+                        "type": "string",
+                        "example": "1f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4d",
+                        "nullable": true
+                    },
+                    "date_rendez_vous": {
+                        "type": "string",
+                        "example": "2026-04-10T09:00:00Z"
+                    },
+                    "service": {
+                        "$ref": "#/components/schemas/ServiceMini"
+                    },
+                    "patient": {
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "7f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                            },
+                            "nom": {
+                                "type": "string",
+                                "example": "Ba"
+                            },
+                            "prenom": {
+                                "type": "string",
+                                "example": "Moussa"
+                            },
+                            "matricule": {
+                                "type": "string",
+                                "example": "PAT-FANN-2026-0001"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "medecin": {
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "9f8c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                            },
+                            "nom": {
+                                "type": "string",
+                                "example": "Diop"
+                            },
+                            "prenom": {
+                                "type": "string",
+                                "example": "Awa"
+                            },
+                            "specialite": {
+                                "type": "string",
+                                "example": "Cardiologie"
+                            }
+                        },
+                        "type": "object",
+                        "nullable": true
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2026-03-23T10:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginatedRendezVous": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RendezVous"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationLinks"
+                    }
+                },
+                "type": "object"
+            },
+            "Consultation": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "1f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    },
+                    "tension_artielle": {
+                        "type": "string",
+                        "example": "12/8"
+                    },
+                    "poids": {
+                        "type": "number",
+                        "example": 70.5
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "example": 36.8
+                    },
+                    "sumptomes": {
+                        "type": "string",
+                        "example": "Douleur thoracique"
+                    },
+                    "diagnostic": {
+                        "type": "string",
+                        "example": "Hypertension"
+                    },
+                    "traitement": {
+                        "type": "string",
+                        "example": "Traitement A"
+                    },
+                    "observations": {
+                        "type": "string",
+                        "example": "Observation",
+                        "nullable": true
+                    },
+                    "date_heure": {
+                        "type": "string",
+                        "example": "2026-03-23T10:00:00Z"
+                    },
+                    "statut": {
+                        "type": "string",
+                        "example": "EN_COURS"
+                    },
+                    "date_rendez_vous": {
+                        "type": "string",
+                        "example": "2026-03-23T09:00:00Z"
+                    },
+                    "statut_rendez": {
+                        "type": "string",
+                        "example": "FAIT"
+                    },
+                    "patient": {
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "7f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                            },
+                            "nom": {
+                                "type": "string",
+                                "example": "Ba"
+                            },
+                            "prenom": {
+                                "type": "string",
+                                "example": "Moussa"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "medecin": {
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "9f8c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                            },
+                            "nom": {
+                                "type": "string",
+                                "example": "Diop"
+                            },
+                            "prenom": {
+                                "type": "string",
+                                "example": "Awa"
+                            },
+                            "specialite": {
+                                "type": "string",
+                                "example": "Cardiologie"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2026-03-23T10:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginatedConsultations": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Consultation"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationLinks"
+                    }
+                },
+                "type": "object"
+            },
+            "PlanningMedecin": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "1f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4d"
+                    },
+                    "date": {
+                        "type": "string",
+                        "example": "25/03/2026"
+                    },
+                    "heure_ouverture": {
+                        "type": "string",
+                        "example": "08:00"
+                    },
+                    "heure_fermeture": {
+                        "type": "string",
+                        "example": "12:00"
+                    },
+                    "capacite": {
+                        "type": "integer",
+                        "example": 8
+                    },
+                    "nombre_rendez_vous_attribues": {
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "places_restantes": {
+                        "type": "integer",
+                        "example": 5
+                    },
+                    "est_complet": {
+                        "type": "boolean",
+                        "example": false
+                    },
+                    "medecin": {
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "example": "9f8c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                            },
+                            "nom": {
+                                "type": "string",
+                                "example": "Diop"
+                            },
+                            "prenom": {
+                                "type": "string",
+                                "example": "Awa"
+                            },
+                            "specialite": {
+                                "type": "string",
+                                "example": "Cardiologie"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "service": {
+                        "$ref": "#/components/schemas/ServiceMini"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2026-03-23T10:00:00Z"
+                    }
+                },
+                "type": "object"
+            },
+            "PaginatedPlannings": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PlanningMedecin"
+                        }
+                    },
+                    "meta": {
+                        "$ref": "#/components/schemas/PaginationMeta"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/PaginationLinks"
+                    }
+                },
+                "type": "object"
+            },
+            "DossierMedical": {
+                "properties": {
+                    "identification": {
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "numero_dossier": {
+                                "type": "string"
+                            },
+                            "created_at": {
+                                "type": "string"
+                            },
+                            "updated_at": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "patient": {
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "matricule": {
+                                "type": "string"
+                            },
+                            "nom": {
+                                "type": "string"
+                            },
+                            "prenom": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "telephone": {
+                                "type": "string"
+                            },
+                            "date_naissance": {
+                                "type": "string"
+                            },
+                            "age": {
+                                "type": "integer"
+                            },
+                            "adresse": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "informations_medicales": {
+                        "properties": {
+                            "groupe_sanguin": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "antecedents_medicaux": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "antecedents_chirurgicaux": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "antecedents_familiaux": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "allergies": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "maladies_chroniques": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "traitements_en_cours": {
+                                "type": "string",
+                                "nullable": true
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "statistiques": {
+                        "properties": {
+                            "nombre_consultations": {
+                                "type": "integer"
+                            },
+                            "nombre_rendez_vous_total": {
+                                "type": "integer"
+                            },
+                            "nombre_rendez_vous_annules": {
+                                "type": "integer"
+                            },
+                            "date_derniere_consultation": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "date_premier_rendez_vous": {
+                                "type": "string",
+                                "nullable": true
+                            }
+                        },
+                        "type": "object"
+                    },
+                    "derniere_consultation": {
+                        "properties": {
+                            "date_heure": {
+                                "type": "string"
+                            },
+                            "statut": {
+                                "type": "string"
+                            },
+                            "medecin": {
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    },
+                                    "prenom": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "service": {
+                                "properties": {
+                                    "nom": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "sumptomes": {
+                                "type": "string"
+                            },
+                            "tension_artielle": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "poids": {
+                                "type": "number",
+                                "nullable": true
+                            },
+                            "temperature": {
+                                "type": "number",
+                                "nullable": true
+                            },
+                            "diagnostic": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "traitement": {
+                                "type": "string",
+                                "nullable": true
+                            },
+                            "observations": {
+                                "type": "string",
+                                "nullable": true
+                            }
+                        },
+                        "type": "object",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "ErrorResponse": {
                 "properties": {
                     "success": {
@@ -1844,12 +4867,22 @@
                     },
                     "message": {
                         "type": "string",
-                        "example": "Erreur"
+                        "example": "Non authentifie"
                     },
                     "data": {
                         "nullable": true
                     },
                     "errors": {
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "example": "authentication"
+                            },
+                            "detail": {
+                                "type": "string",
+                                "example": "Authentification requise pour acceder a cette ressource."
+                            }
+                        },
                         "type": "object",
                         "nullable": true
                     }
@@ -2014,6 +5047,177 @@
                 },
                 "type": "object"
             },
+            "PatientResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Détail du patient"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Patient"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PatientListResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Liste des patients"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PaginatedPatients"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "RendezVousResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Détail du rendez-vous"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/RendezVous"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "RendezVousListResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Liste des rendez-vous"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PaginatedRendezVous"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ConsultationResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Détail de la consultation"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Consultation"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ConsultationListResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Liste des consultations"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PaginatedConsultations"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "DossierMedicalResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Dossier médical"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/DossierMedical"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PlanningMedecinResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Detail du planning"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PlanningMedecin"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PlanningMedecinListResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Liste des plannings"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/PaginatedPlannings"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
             "PlanningResponse": {
                 "properties": {
                     "success": {
@@ -2022,13 +5226,40 @@
                     },
                     "message": {
                         "type": "string",
-                        "example": "Planning du médecin"
+                        "example": "Planning du medecin"
                     },
                     "data": {
                         "type": "array",
                         "items": {
-                            "type": "object"
+                            "$ref": "#/components/schemas/PlanningMedecin"
                         }
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "ConsultationReprogrammationResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Rendez-vous de suivi reprogramme avec succes"
+                    },
+                    "data": {
+                        "properties": {
+                            "consultation": {
+                                "$ref": "#/components/schemas/Consultation"
+                            },
+                            "nouveau_rendez_vous": {
+                                "$ref": "#/components/schemas/RendezVous"
+                            }
+                        },
+                        "type": "object"
                     },
                     "errors": {
                         "nullable": true
@@ -2213,6 +5444,294 @@
                 },
                 "type": "object"
             },
+            "PatientCreateRequest": {
+                "required": [
+                    "nom",
+                    "prenom",
+                    "email",
+                    "telephone",
+                    "dateNaissance",
+                    "adresse"
+                ],
+                "properties": {
+                    "nom": {
+                        "type": "string",
+                        "example": "Ba"
+                    },
+                    "prenom": {
+                        "type": "string",
+                        "example": "Moussa"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "moussa.ba@example.com"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "771234567"
+                    },
+                    "dateNaissance": {
+                        "type": "string",
+                        "example": "1990-05-12"
+                    },
+                    "adresse": {
+                        "type": "string",
+                        "example": "Dakar"
+                    }
+                },
+                "type": "object"
+            },
+            "PatientUpdateRequest": {
+                "properties": {
+                    "nom": {
+                        "type": "string",
+                        "example": "Ba"
+                    },
+                    "prenom": {
+                        "type": "string",
+                        "example": "Moussa"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "moussa.ba@example.com"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "771234567"
+                    },
+                    "dateNaissance": {
+                        "type": "string",
+                        "example": "1990-05-12"
+                    },
+                    "adresse": {
+                        "type": "string",
+                        "example": "Dakar"
+                    },
+                    "statut": {
+                        "type": "string",
+                        "example": "ACTIF"
+                    }
+                },
+                "type": "object"
+            },
+            "PlanningMedecinCreateRequest": {
+                "required": [
+                    "date",
+                    "heure_ouverture",
+                    "heure_fermeture",
+                    "capacite"
+                ],
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2026-03-25"
+                    },
+                    "heure_ouverture": {
+                        "type": "string",
+                        "example": "08:00"
+                    },
+                    "heure_fermeture": {
+                        "type": "string",
+                        "example": "12:00"
+                    },
+                    "capacite": {
+                        "type": "integer",
+                        "example": 8
+                    }
+                },
+                "type": "object"
+            },
+            "PlanningMedecinUpdateRequest": {
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "format": "date",
+                        "example": "2026-03-25"
+                    },
+                    "heure_ouverture": {
+                        "type": "string",
+                        "example": "09:00"
+                    },
+                    "heure_fermeture": {
+                        "type": "string",
+                        "example": "13:00"
+                    },
+                    "capacite": {
+                        "type": "integer",
+                        "example": 10
+                    }
+                },
+                "type": "object"
+            },
+            "RendezVousCreateRequest": {
+                "required": [
+                    "service_medical_id",
+                    "motif"
+                ],
+                "properties": {
+                    "service_medical_id": {
+                        "type": "string",
+                        "example": "2f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    },
+                    "motif": {
+                        "type": "string",
+                        "example": "Douleurs thoraciques"
+                    }
+                },
+                "type": "object"
+            },
+            "RendezVousStatutUpdateRequest": {
+                "required": [
+                    "statut"
+                ],
+                "properties": {
+                    "statut": {
+                        "type": "string",
+                        "enum": [
+                            "PLANIFIER",
+                            "FAIT",
+                            "ANNULER"
+                        ]
+                    }
+                },
+                "type": "object"
+            },
+            "RendezVousReprogrammationRequest": {
+                "required": [
+                    "motif_suivi"
+                ],
+                "properties": {
+                    "motif_suivi": {
+                        "type": "string",
+                        "example": "Controle post traitement"
+                    }
+                },
+                "type": "object"
+            },
+            "DossierMedicalUpdateRequest": {
+                "properties": {
+                    "groupe_sanguin": {
+                        "type": "string",
+                        "example": "O+"
+                    },
+                    "antecedents_medicaux": {
+                        "type": "string",
+                        "example": "Hypertension"
+                    },
+                    "antecedents_chirurgicaux": {
+                        "type": "string",
+                        "example": "Aucun"
+                    },
+                    "antecedents_familiaux": {
+                        "type": "string",
+                        "example": "Diabète"
+                    },
+                    "allergies": {
+                        "type": "string",
+                        "example": "Aucune"
+                    },
+                    "maladies_chroniques": {
+                        "type": "string",
+                        "example": "Asthme"
+                    },
+                    "traitements_en_cours": {
+                        "type": "string",
+                        "example": "Traitement A"
+                    }
+                },
+                "type": "object"
+            },
+            "ConsultationCreateRequest": {
+                "required": [
+                    "rendez_vous_id",
+                    "tension_artielle",
+                    "poids",
+                    "temperature",
+                    "sumptomes",
+                    "diagnostic",
+                    "traitement"
+                ],
+                "properties": {
+                    "rendez_vous_id": {
+                        "type": "string",
+                        "example": "5f2c9c2b-2d2a-4e75-b1a6-1a2f1e2a3b4c"
+                    },
+                    "tension_artielle": {
+                        "type": "string",
+                        "example": "12/8"
+                    },
+                    "poids": {
+                        "type": "number",
+                        "example": 70.5
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "example": 36.8
+                    },
+                    "sumptomes": {
+                        "type": "string",
+                        "example": "Douleur thoracique"
+                    },
+                    "diagnostic": {
+                        "type": "string",
+                        "example": "Hypertension"
+                    },
+                    "traitement": {
+                        "type": "string",
+                        "example": "Traitement A"
+                    },
+                    "observations": {
+                        "type": "string",
+                        "example": "Observation"
+                    },
+                    "mise_a_jour_dossier": {
+                        "$ref": "#/components/schemas/DossierMedicalUpdateRequest"
+                    }
+                },
+                "type": "object"
+            },
+            "ConsultationUpdateRequest": {
+                "properties": {
+                    "tensionArtielle": {
+                        "type": "string",
+                        "example": "12/8"
+                    },
+                    "poids": {
+                        "type": "number",
+                        "example": 70.5
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "example": 36.8
+                    },
+                    "sumptomes": {
+                        "type": "string",
+                        "example": "Douleur thoracique"
+                    },
+                    "diagnostic": {
+                        "type": "string",
+                        "example": "Hypertension"
+                    },
+                    "traitement": {
+                        "type": "string",
+                        "example": "Traitement A"
+                    },
+                    "observations": {
+                        "type": "string",
+                        "example": "Observation"
+                    }
+                },
+                "type": "object"
+            },
+            "ConsultationClotureRequest": {
+                "properties": {
+                    "mise_a_jour_dossier": {
+                        "$ref": "#/components/schemas/DossierMedicalUpdateRequest"
+                    }
+                },
+                "type": "object"
+            },
             "ServiceUpdateRequest": {
                 "properties": {
                     "nom": {
@@ -2273,12 +5792,32 @@
             "description": "Admin"
         },
         {
+            "name": "RendezVous",
+            "description": "RendezVous"
+        },
+        {
             "name": "Auth",
             "description": "Auth"
         },
         {
+            "name": "Consultations",
+            "description": "Consultations"
+        },
+        {
+            "name": "Dossiers",
+            "description": "Dossiers"
+        },
+        {
             "name": "Medecins",
             "description": "Medecins"
+        },
+        {
+            "name": "Patients",
+            "description": "Patients"
+        },
+        {
+            "name": "Plannings",
+            "description": "Plannings"
         },
         {
             "name": "Secretaires",

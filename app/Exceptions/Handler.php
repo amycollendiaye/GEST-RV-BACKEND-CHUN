@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -9,6 +10,13 @@ use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
+use App\Exceptions\RendezVousDejaExistantException;
+use App\Exceptions\ConsultationNonTermineeException;
+use App\Exceptions\AnnulationImpossibleException;
+use App\Exceptions\DossierMedicalModificationInterditeException;
+use App\Exceptions\PlanningDejaExistantException;
+use App\Exceptions\PlanningNonModifiableException;
+use App\Exceptions\AucunCreneauDisponibleException;
 
 class Handler extends ExceptionHandler
 {
@@ -35,7 +43,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e)
     {
-        if ($request->expectsJson()) {
+        if ($this->isApiRequest($request)) {
             if ($e instanceof ValidationException) {
                 return response()->json([
                     'success' => false,
@@ -45,12 +53,27 @@ class Handler extends ExceptionHandler
                 ], 422);
             }
 
+            if ($e instanceof AuthenticationException) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Non authentifie',
+                    'data' => null,
+                    'errors' => [
+                        'type' => 'authentication',
+                        'detail' => 'Authentification requise pour acceder a cette ressource.',
+                    ],
+                ], 401);
+            }
+
             if ($e instanceof AuthorizationException) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Non autorisé',
+                    'message' => 'Acces refuse',
                     'data' => null,
-                    'errors' => null,
+                    'errors' => [
+                        'type' => 'authorization',
+                        'detail' => 'Vous n avez pas les droits pour acceder a cette ressource.',
+                    ],
                 ], 403);
             }
 
@@ -59,27 +82,97 @@ class Handler extends ExceptionHandler
                     'success' => false,
                     'message' => 'Ressource non trouvée',
                     'data' => null,
-                    'errors' => null,
+                    'errors' => [
+                        'type' => 'not_found',
+                        'detail' => 'La ressource demandee est introuvable.',
+                    ],
                 ], 404);
             }
 
             if ($e instanceof HttpException) {
                 return response()->json([
                     'success' => false,
-                    'message' => $e->getMessage() ?: 'Erreur serveur',
+                    'message' => $this->httpExceptionMessage($e),
+                    'data' => null,
+                    'errors' => $this->httpExceptionErrors($e),
+                ], $e->getStatusCode());
+            }
+
+            if ($e instanceof RendezVousDejaExistantException
+                || $e instanceof ConsultationNonTermineeException
+                || $e instanceof AnnulationImpossibleException
+                || $e instanceof DossierMedicalModificationInterditeException
+                || $e instanceof PlanningDejaExistantException
+                || $e instanceof PlanningNonModifiableException
+                || $e instanceof AucunCreneauDisponibleException
+            ) {
+                $status = $e->getCode() ?: 400;
+                return response()->json([
+                    'success' => false,
+                    'message' => $e->getMessage(),
                     'data' => null,
                     'errors' => null,
-                ], $e->getStatusCode());
+                ], $status);
             }
 
             return response()->json([
                 'success' => false,
                 'message' => 'Erreur serveur',
                 'data' => null,
-                'errors' => null,
+                'errors' => [
+                    'type' => 'server',
+                    'detail' => 'Une erreur interne est survenue sur le serveur.',
+                ],
             ], 500);
         }
 
         return parent::render($request, $e);
+    }
+
+    private function isApiRequest($request): bool
+    {
+        return $request->is('api/*') || $request->expectsJson();
+    }
+
+    private function httpExceptionMessage(HttpException $e): string
+    {
+        $message = trim((string) $e->getMessage());
+
+        if ($message !== '') {
+            return $message;
+        }
+
+        return match ($e->getStatusCode()) {
+            401 => 'Non authentifie',
+            403 => 'Acces refuse',
+            404 => 'Ressource non trouvée',
+            500 => 'Erreur serveur',
+            default => $e->getMessage() ?: 'Erreur HTTP',
+        };
+    }
+
+    private function httpExceptionErrors(HttpException $e): ?array
+    {
+        $message = trim((string) $e->getMessage());
+
+        return match ($e->getStatusCode()) {
+            401 => [
+                'type' => 'authentication',
+                'detail' => $message !== '' ? $message : 'Authentification requise pour acceder a cette ressource.',
+            ],
+            403 => [
+                'type' => 'authorization',
+                'detail' => $message !== '' ? $message : 'Vous n avez pas les droits pour acceder a cette ressource.',
+            ],
+            404 => [
+                'type' => 'not_found',
+                'detail' => $message !== '' ? $message : 'La ressource demandee est introuvable.',
+            ],
+            500 => [
+                'type' => 'server',
+                'detail' => $message !== '' ? $message : 'Une erreur interne est survenue sur le serveur.',
+            ],
+            default => null,
+        };
     }
 }

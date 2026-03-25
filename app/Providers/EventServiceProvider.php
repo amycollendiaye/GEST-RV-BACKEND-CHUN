@@ -3,10 +3,18 @@
 namespace App\Providers;
 
 use App\Events\AdminCreated;
+use App\Events\ConsultationTerminee;
 use App\Events\MedecinCreated;
+use App\Events\PatientCreated;
+use App\Events\RendezVousAttribue;
+use App\Events\RendezVousReprogramme;
 use App\Events\SecretaireCreated;
 use App\Listeners\SendAdminCredentialsEmail;
+use App\Listeners\SendConsultationTermineeSms;
 use App\Listeners\SendMedecinCredentialsSms;
+use App\Listeners\SendPatientCredentialsSms;
+use App\Listeners\SendRendezVousAttribueSms;
+use App\Listeners\SendRendezVousReprogrammeSms;
 use App\Listeners\SendSecretaireCredentialsSms;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
@@ -27,6 +35,18 @@ class EventServiceProvider extends ServiceProvider
         ],
         SecretaireCreated::class => [
             SendSecretaireCredentialsSms::class,
+        ],
+        PatientCreated::class => [
+            SendPatientCredentialsSms::class,
+        ],
+        RendezVousAttribue::class => [
+            SendRendezVousAttribueSms::class,
+        ],
+        RendezVousReprogramme::class => [
+            SendRendezVousReprogrammeSms::class,
+        ],
+        ConsultationTerminee::class => [
+            SendConsultationTermineeSms::class,
         ],
     ];
 

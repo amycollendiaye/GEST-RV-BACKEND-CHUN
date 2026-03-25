@@ -41,4 +41,26 @@ class SmsNotificationService implements SmsNotificationInterface
             'body' => $message,
         ]);
     }
+
+    public function envoyerMessage(string $telephone, string $message): void
+    {
+        $sid = config('services.twilio.sid');
+        $token = config('services.twilio.token');
+        $from = config('services.twilio.from');
+
+        if (!$sid || !$token || !$from) {
+            Log::warning('Configuration Twilio incomplete. SMS non envoye.', [
+                'telephone' => $telephone,
+                'message' => $message,
+            ]);
+            return;
+        }
+
+        $client = new Client($sid, $token);
+
+        $client->messages->create($telephone, [
+            'from' => $from,
+            'body' => $message,
+        ]);
+    }
 }

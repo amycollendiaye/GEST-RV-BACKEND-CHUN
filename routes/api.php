@@ -3,8 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ActivationController;
+use App\Http\Controllers\Api\AttributionRendezVousController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ConsultationController;
+use App\Http\Controllers\Api\DossierMedicalController;
 use App\Http\Controllers\Api\MedecinController;
+use App\Http\Controllers\Api\PatientController;
+use App\Http\Controllers\Api\PlanningMedecinController;
+use App\Http\Controllers\Api\RendezVousController;
 use App\Http\Controllers\Api\SecretaireController;
 use App\Http\Controllers\Api\ServiceMedicalController;
 
@@ -29,6 +35,14 @@ Route::post('/activation/password', [ActivationController::class, 'updatePasswor
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 
+    Route::post('/plannings', [PlanningMedecinController::class, 'store']);
+    Route::get('/plannings/mes-plannings', [PlanningMedecinController::class, 'mesPlannings']);
+    Route::get('/plannings', [PlanningMedecinController::class, 'index']);
+    Route::get('/plannings/{id}', [PlanningMedecinController::class, 'show']);
+    Route::put('/plannings/{id}', [PlanningMedecinController::class, 'update']);
+    Route::delete('/plannings/{id}', [PlanningMedecinController::class, 'destroy']);
+    Route::get('/plannings/{id}/rendez-vous', [PlanningMedecinController::class, 'rendezVous']);
+
     Route::get('/medecins', [MedecinController::class, 'index']);
     Route::post('/medecins', [MedecinController::class, 'store']);
     Route::get('/medecins/{id}', [MedecinController::class, 'show']);
@@ -49,4 +63,31 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/services/{serviceMedical}', [ServiceMedicalController::class, 'show']);
     Route::put('/services/{serviceMedical}', [ServiceMedicalController::class, 'update']);
     Route::delete('/services/{serviceMedical}', [ServiceMedicalController::class, 'destroy']);
+
+    Route::post('/patients', [PatientController::class, 'store']);
+    Route::get('/patients', [PatientController::class, 'index']);
+    Route::get('/patients/mon-profil', [PatientController::class, 'monProfil']);
+    Route::get('/patients/mon-dossier', [PatientController::class, 'monDossier']);
+    Route::get('/patients/{id}', [PatientController::class, 'show']);
+    Route::put('/patients/{id}', [PatientController::class, 'update']);
+    Route::delete('/patients/{id}', [PatientController::class, 'destroy']);
+    Route::get('/patients/{id}/rendez-vous', [PatientController::class, 'rendezVous']);
+
+    Route::post('/rendez-vous', [AttributionRendezVousController::class, 'store']);
+    Route::get('/rendez-vous', [RendezVousController::class, 'index']);
+    Route::get('/services/disponibles', [RendezVousController::class, 'servicesDisponibles']);
+    Route::get('/rendez-vous/mes-rendez-vous', [RendezVousController::class, 'mesRendezVous']);
+    Route::get('/rendez-vous/{id}', [RendezVousController::class, 'show']);
+    Route::patch('/rendez-vous/{id}/annuler', [RendezVousController::class, 'annuler']);
+    Route::patch('/rendez-vous/{id}/statut', [RendezVousController::class, 'changerStatut']);
+
+    Route::get('/dossiers/{id}', [DossierMedicalController::class, 'show']);
+    Route::put('/dossiers/{id}', [DossierMedicalController::class, 'update']);
+
+    Route::post('/consultations', [ConsultationController::class, 'store']);
+    Route::get('/consultations', [ConsultationController::class, 'index']);
+    Route::get('/consultations/{id}', [ConsultationController::class, 'show']);
+    Route::put('/consultations/{id}', [ConsultationController::class, 'update']);
+    Route::patch('/consultations/{id}/cloturer', [ConsultationController::class, 'cloturer']);
+    Route::patch('/consultations/{id}/reprogrammer', [ConsultationController::class, 'reprogrammer']);
 });

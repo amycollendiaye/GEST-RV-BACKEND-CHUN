@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\InfosConnexion;
+use App\Models\Patient;
 
 class PasswordGeneratorService
 {
@@ -36,6 +37,20 @@ class PasswordGeneratorService
         $suffix = 1;
 
         while (InfosConnexion::where('login', $login)->exists()) {
+            $login = $base . $suffix;
+            $suffix++;
+        }
+
+        return $login;
+    }
+
+    public function genererLoginPatientDepuisMatricule(string $matricule): string
+    {
+        $base = strtolower(str_replace('-', '', $matricule));
+        $login = $base;
+        $suffix = 1;
+
+        while (Patient::where('login', $login)->exists()) {
             $login = $base . $suffix;
             $suffix++;
         }

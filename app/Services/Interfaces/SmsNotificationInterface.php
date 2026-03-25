@@ -11,4 +11,6 @@ interface SmsNotificationInterface
         string $password,
         string $lienActivation
     ): void;
+
+    public function envoyerMessage(string $telephone, string $message): void;
 }

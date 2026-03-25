@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\RendezVous;
+use App\Models\Consultation;
 
 class PersonelHopital extends Authenticatable
 {
@@ -81,6 +83,16 @@ class PersonelHopital extends Authenticatable
     public function planningMedecins()
     {
         return $this->hasMany(PlanningMedecin::class, 'medecin_id');
+    }
+
+    public function rendezVous()
+    {
+        return $this->hasMany(RendezVous::class, 'medecin_id');
+    }
+
+    public function consultations()
+    {
+        return $this->hasMany(Consultation::class, 'medecin_id');
     }
 
     public function scopeMedecins($query)

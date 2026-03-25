@@ -3,7 +3,12 @@
 namespace App\Providers;
 
 use App\Models\ServiceMedical;
+use App\Policies\ConsultationPolicy;
+use App\Policies\DossierMedicalPolicy;
 use App\Policies\MedecinPolicy;
+use App\Policies\PatientPolicy;
+use App\Policies\PlanningMedecinPolicy;
+use App\Policies\RendezVousPolicy;
 use App\Policies\SecretairePolicy;
 use App\Policies\ServiceMedicalPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -44,5 +49,33 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('service.create', [ServiceMedicalPolicy::class, 'create']);
         Gate::define('service.update', [ServiceMedicalPolicy::class, 'update']);
         Gate::define('service.delete', [ServiceMedicalPolicy::class, 'delete']);
+
+        Gate::define('patient.viewAny', [PatientPolicy::class, 'viewAny']);
+        Gate::define('patient.view', [PatientPolicy::class, 'view']);
+        Gate::define('patient.create', [PatientPolicy::class, 'create']);
+        Gate::define('patient.update', [PatientPolicy::class, 'update']);
+        Gate::define('patient.delete', [PatientPolicy::class, 'delete']);
+
+        Gate::define('planning.viewAny', [PlanningMedecinPolicy::class, 'viewAny']);
+        Gate::define('planning.view', [PlanningMedecinPolicy::class, 'view']);
+        Gate::define('planning.create', [PlanningMedecinPolicy::class, 'create']);
+        Gate::define('planning.update', [PlanningMedecinPolicy::class, 'update']);
+        Gate::define('planning.delete', [PlanningMedecinPolicy::class, 'delete']);
+
+        Gate::define('rendezvous.viewAny', [RendezVousPolicy::class, 'viewAny']);
+        Gate::define('rendezvous.view', [RendezVousPolicy::class, 'view']);
+        Gate::define('rendezvous.create', [RendezVousPolicy::class, 'create']);
+        Gate::define('rendezvous.annuler', [RendezVousPolicy::class, 'annuler']);
+        Gate::define('rendezvous.changerStatut', [RendezVousPolicy::class, 'changerStatut']);
+
+        Gate::define('dossier.view', [DossierMedicalPolicy::class, 'view']);
+        Gate::define('dossier.update', [DossierMedicalPolicy::class, 'update']);
+
+        Gate::define('consultation.viewAny', [ConsultationPolicy::class, 'viewAny']);
+        Gate::define('consultation.view', [ConsultationPolicy::class, 'view']);
+        Gate::define('consultation.create', [ConsultationPolicy::class, 'create']);
+        Gate::define('consultation.update', [ConsultationPolicy::class, 'update']);
+        Gate::define('consultation.cloturer', [ConsultationPolicy::class, 'cloturer']);
+        Gate::define('consultation.reprogrammer', [ConsultationPolicy::class, 'reprogrammer']);
     }
 }

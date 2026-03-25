@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Patient;
 use App\Services\Auth\ChangePasswordService;
 use App\Services\Auth\LoginService;
 use App\Services\Auth\LogoutService;
@@ -74,8 +75,12 @@ class AuthController extends Controller
                 'token' => $result['token'],
                 'user' => [
                     'id' => $result['user']->id,
-                    'login' => $result['user']->infosConnexion?->login,
-                    'role' => $result['user']->role,
+                    'login' => $result['user'] instanceof Patient
+                        ? $result['user']->login
+                        : $result['user']->infosConnexion?->login,
+                    'role' => $result['user'] instanceof Patient
+                        ? 'PATIENT'
+                        : $result['user']->role,
                 ],
             ],
             'errors' => null,

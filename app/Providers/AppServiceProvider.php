@@ -3,11 +3,21 @@
 namespace App\Providers;
 
 use App\Repositories\Interfaces\AdminRepositoryInterface;
+use App\Repositories\Interfaces\ConsultationRepositoryInterface;
+use App\Repositories\Interfaces\DossierMedicalRepositoryInterface;
 use App\Repositories\Interfaces\MedecinRepositoryInterface;
+use App\Repositories\Interfaces\PatientRepositoryInterface;
+use App\Repositories\Interfaces\PlanningMedecinRepositoryInterface;
+use App\Repositories\Interfaces\RendezVousRepositoryInterface;
 use App\Repositories\Interfaces\SecretaireRepositoryInterface;
 use App\Repositories\Interfaces\ServiceMedicalRepositoryInterface;
 use App\Repositories\AdminRepository;
+use App\Repositories\ConsultationRepository;
+use App\Repositories\DossierMedicalRepository;
 use App\Repositories\MedecinRepository;
+use App\Repositories\PatientRepository;
+use App\Repositories\PlanningMedecinRepository;
+use App\Repositories\RendezVousRepository;
 use App\Repositories\SecretaireRepository;
 use App\Repositories\ServiceMedicalRepository;
 use App\Services\Interfaces\SmsNotificationInterface;
@@ -25,6 +35,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(MedecinRepositoryInterface::class, MedecinRepository::class);
         $this->app->bind(SecretaireRepositoryInterface::class, SecretaireRepository::class);
         $this->app->bind(ServiceMedicalRepositoryInterface::class, ServiceMedicalRepository::class);
+        $this->app->bind(PatientRepositoryInterface::class, PatientRepository::class);
+        $this->app->bind(PlanningMedecinRepositoryInterface::class, PlanningMedecinRepository::class);
+        $this->app->bind(RendezVousRepositoryInterface::class, RendezVousRepository::class);
+        $this->app->bind(DossierMedicalRepositoryInterface::class, DossierMedicalRepository::class);
+        $this->app->bind(ConsultationRepositoryInterface::class, ConsultationRepository::class);
         $this->app->bind(SmsNotificationInterface::class, SmsNotificationService::class);
     }
 

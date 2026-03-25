@@ -2,11 +2,11 @@
 
 namespace App\Services\Auth;
 
-use App\Models\PersonelHopital;
+use Illuminate\Contracts\Auth\Authenticatable;
 
 class LogoutService
 {
-    public function execute(PersonelHopital $user): void
+    public function execute(Authenticatable $user): void
     {
         $user->currentAccessToken()?->delete();
     }

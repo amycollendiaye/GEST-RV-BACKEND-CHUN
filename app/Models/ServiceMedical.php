@@ -57,4 +57,9 @@ class ServiceMedical extends Model
     {
         return $this->personnels()->where('role', 'SECRETAIRE');
     }
+
+    public function planningMedecins()
+    {
+        return $this->hasMany(PlanningMedecin::class, 'service_medical_id');
+    }
 }
