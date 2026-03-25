@@ -318,43 +318,26 @@ return [
          */
         'constants' => [
             'L5_SWAGGER_CONST_HOST' => (static function (): string {
-                // Check for explicit override first
                 $overrideUrl = (string) config('l5-swagger.defaults.paths.server_url_override', '');
+
                 if ($overrideUrl !== '') {
                     return rtrim($overrideUrl, '/');
                 }
 
-                // Use APP_URL as the host
-                $appUrl = config('app.url', 'http://localhost');
-                
-                // If APP_URL contains localhost or 127.0.0.1, use local server
-                if (str_contains($appUrl, '127.0.0.1') || str_contains($appUrl, 'localhost')) {
-                    return 'http://127.0.0.1:8000';
-                }
-                
-                // Production - use the production server
-                return 'https://gest-rv-backend-chun.onrender.com';
+                return rtrim((string) config('app.url', 'http://localhost'), '/');
             })(),
             'L5_SWAGGER_CONST_SERVER_URL' => (static function (): string {
-                // Check for explicit override first
                 $overrideUrl = (string) config('l5-swagger.defaults.paths.server_url_override', '');
+
                 if ($overrideUrl !== '') {
                     if (! str_starts_with($overrideUrl, 'http://') && ! str_starts_with($overrideUrl, 'https://')) {
                         return '/' . ltrim($overrideUrl, '/');
                     }
+
                     return rtrim($overrideUrl, '/');
                 }
 
-                // Use APP_URL as the server
-                $appUrl = config('app.url', 'http://localhost');
-                
-                // If APP_URL contains localhost or 127.0.0.1, use local server
-                if (str_contains($appUrl, '127.0.0.1') || str_contains($appUrl, 'localhost')) {
-                    return 'http://127.0.0.1:8000';
-                }
-                
-                // Production - use the production server
-                return 'https://gest-rv-backend-chun.onrender.com';
+                return '/' . ltrim((string) env('L5_SWAGGER_API_PREFIX', '/api/v1'), '/');
             })(),
         ],
     ],
