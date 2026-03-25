@@ -7,11 +7,8 @@
     },
     "servers": [
         {
-            "url": "/",
-            "description": "Serveur local"
-        },
-        {
-            "url": "/api/v1"
+            "url": "http://localhost/api/v1",
+            "description": "Serveur courant"
         }
     ],
     "paths": {

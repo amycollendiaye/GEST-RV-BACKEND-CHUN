@@ -91,7 +91,7 @@ return [
             /*
              * Edit to set the api's base path
              */
-            'base' => env('L5_SWAGGER_BASE_PATH', '/api/v1'),
+            'base' => env('L5_SWAGGER_BASE_PATH', null),
 
             /*
              * Absolute path to directories that should be excluded from scanning
@@ -312,7 +312,28 @@ return [
          * Constants which can be used in annotations
          */
         'constants' => [
-            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
+            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', rtrim(env('APP_URL', 'http://localhost'), '/')),
+            'L5_SWAGGER_CONST_SERVER_URL' => (static function (): string {
+                $appEnv = env('APP_ENV');
+                $appUrl = rtrim((string) env('APP_URL', ''), '/');
+                $defaultUrl = $appEnv === 'production'
+                    ? 'https://gest-rv-backend-chun.onrender.com'
+                    : 'http://localhost';
+
+                $resolvedUrl = $appUrl;
+
+                if ($resolvedUrl === '' || ($appEnv === 'production' && in_array($resolvedUrl, [
+                    'http://localhost',
+                    'http://127.0.0.1',
+                    'http://localhost:8000',
+                    'http://127.0.0.1:8000',
+                ], true))) {
+                    $resolvedUrl = $defaultUrl;
+                }
+
+                return rtrim(env('L5_SWAGGER_CONST_SERVER_URL', $resolvedUrl), '/')
+                    . env('L5_SWAGGER_API_PREFIX', '/api/v1');
+            })(),
         ],
     ],
 ];

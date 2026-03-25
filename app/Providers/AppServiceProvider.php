@@ -32,6 +32,7 @@ use App\Repositories\SecretaireRepository;
 use App\Repositories\ServiceMedicalRepository;
 use App\Services\Interfaces\SmsNotificationInterface;
 use App\Services\SmsNotificationService;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -59,6 +60,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if ($this->app->environment('production') || (bool) env('APP_FORCE_HTTPS', false)) {
+            URL::forceScheme('https');
+        }
+
         PersonelHopital::observe(PersonelHopitalObserver::class);
         Patient::observe(PatientObserver::class);
         RendezVous::observe(RendezVousObserver::class);

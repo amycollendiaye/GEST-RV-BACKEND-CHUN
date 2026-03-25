@@ -13,8 +13,8 @@ use Illuminate\Routing\Controller as BaseController;
  *     description="Documentation des endpoints API"
  * )
  * @OA\Server(
- *     url="/",
- *     description="Serveur local"
+ *     url=L5_SWAGGER_CONST_SERVER_URL,
+ *     description="Serveur courant"
  * )
  * @OA\SecurityScheme(
  *     securityScheme="bearerAuth",
