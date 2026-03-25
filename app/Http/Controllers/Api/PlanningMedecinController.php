@@ -28,7 +28,7 @@ class PlanningMedecinController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/plannings",
+     *     path="/plannings",
      *     tags={"Plannings"},
      *     summary="Creer un planning medecin",
      *     security={{"bearerAuth":{}}},
@@ -68,7 +68,7 @@ class PlanningMedecinController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/plannings/mes-plannings",
+     *     path="/plannings/mes-plannings",
      *     tags={"Plannings"},
      *     summary="Lister les plannings du medecin connecte",
      *     security={{"bearerAuth":{}}},
@@ -120,7 +120,7 @@ class PlanningMedecinController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/plannings",
+     *     path="/plannings",
      *     tags={"Plannings"},
      *     summary="Lister tous les plannings",
      *     security={{"bearerAuth":{}}},
@@ -169,7 +169,7 @@ class PlanningMedecinController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/plannings/{id}",
+     *     path="/plannings/{id}",
      *     tags={"Plannings"},
      *     summary="Detail d un planning",
      *     security={{"bearerAuth":{}}},
@@ -203,7 +203,7 @@ class PlanningMedecinController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/v1/plannings/{id}",
+     *     path="/plannings/{id}",
      *     tags={"Plannings"},
      *     summary="Modifier un planning",
      *     security={{"bearerAuth":{}}},
@@ -245,7 +245,7 @@ class PlanningMedecinController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/plannings/{id}",
+     *     path="/plannings/{id}",
      *     tags={"Plannings"},
      *     summary="Supprimer un planning",
      *     security={{"bearerAuth":{}}},
@@ -282,7 +282,7 @@ class PlanningMedecinController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/plannings/{id}/rendez-vous",
+     *     path="/plannings/{id}/rendez-vous",
      *     tags={"Plannings"},
      *     summary="Lister les rendez-vous d un planning",
      *     security={{"bearerAuth":{}}},

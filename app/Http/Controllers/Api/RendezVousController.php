@@ -30,7 +30,7 @@ class RendezVousController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/rendez-vous",
+     *     path="/rendez-vous",
      *     tags={"RendezVous"},
      *     summary="Liste des rendez-vous",
      *     security={{"bearerAuth":{}}},
@@ -107,7 +107,7 @@ class RendezVousController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/rendez-vous/{id}",
+     *     path="/rendez-vous/{id}",
      *     tags={"RendezVous"},
      *     summary="Détail d'un rendez-vous",
      *     security={{"bearerAuth":{}}},
@@ -153,7 +153,7 @@ class RendezVousController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/rendez-vous/mes-rendez-vous",
+     *     path="/rendez-vous/mes-rendez-vous",
      *     tags={"RendezVous"},
      *     summary="Liste des rendez-vous du patient connecté",
      *     security={{"bearerAuth":{}}},
@@ -211,7 +211,7 @@ class RendezVousController extends Controller
 
     /**
      * @OA\Patch(
-     *     path="/api/v1/rendez-vous/{id}/annuler",
+     *     path="/rendez-vous/{id}/annuler",
      *     tags={"RendezVous"},
      *     summary="Annuler un rendez-vous",
      *     security={{"bearerAuth":{}}},
@@ -264,7 +264,7 @@ class RendezVousController extends Controller
 
     /**
      * @OA\Patch(
-     *     path="/api/v1/rendez-vous/{id}/statut",
+     *     path="/rendez-vous/{id}/statut",
      *     tags={"RendezVous"},
      *     summary="Changer le statut d'un rendez-vous",
      *     security={{"bearerAuth":{}}},
@@ -325,7 +325,7 @@ class RendezVousController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/services/disponibles",
+     *     path="/services/disponibles",
      *     tags={"RendezVous"},
      *     summary="Liste des services médicaux disponibles",
      *     security={{"bearerAuth":{}}},

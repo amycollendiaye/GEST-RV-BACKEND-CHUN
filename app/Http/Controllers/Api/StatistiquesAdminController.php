@@ -16,7 +16,7 @@ class StatistiquesAdminController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/statistiques/admin",
+     *     path="/statistiques/admin",
      *     tags={"Statistiques"},
      *     summary="Récupérer le tableau de bord administrateur",
      *     security={{"bearerAuth":{}}},

@@ -114,13 +114,13 @@
                 }
             }
         },
-        "/api/v1/admin/register": {
+        "/admin/register": {
             "post": {
                 "tags": [
                     "Admin"
                 ],
                 "summary": "Créer le premier administrateur",
-                "operationId": "43c92510c63e5bc08ac1751be0ba65d5",
+                "operationId": "73df37db67cae0e94916fe55a2c307b8",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -189,13 +189,13 @@
                 }
             }
         },
-        "/api/v1/rendez-vous": {
+        "/rendez-vous": {
             "get": {
                 "tags": [
                     "RendezVous"
                 ],
                 "summary": "Liste des rendez-vous",
-                "operationId": "b428aeec440f6a144835a9c37eee92fc",
+                "operationId": "1fb8faeae79fe2713def9291055dfa28",
                 "parameters": [
                     {
                         "name": "per_page",
@@ -303,7 +303,7 @@
                     "RendezVous"
                 ],
                 "summary": "Creer un rendez-vous avec attribution automatique",
-                "operationId": "a67ef42231f92b4b6dee5c3cad4390be",
+                "operationId": "23527825cf0ac6f8a72d7dd0d09766b5",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -383,13 +383,13 @@
                 ]
             }
         },
-        "/api/v1/auth/login": {
+        "/auth/login": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Connexion",
-                "operationId": "fb66b153966d9fac2e999136ef0ade67",
+                "operationId": "99d66635c4992aeaa6aa44ff653d0563",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -449,13 +449,13 @@
                 }
             }
         },
-        "/api/v1/auth/change-password": {
+        "/auth/change-password": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Changer le mot de passe (première connexion)",
-                "operationId": "73e7fe87ae608fb56115234032e979f2",
+                "operationId": "392f5b8efb38f64f049872d18d481cf1",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -537,13 +537,13 @@
                 }
             }
         },
-        "/api/v1/auth/logout": {
+        "/auth/logout": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Déconnexion",
-                "operationId": "307ed0512855922b2280792376bb2095",
+                "operationId": "6abf3b64a4bc7838d56346f05a5153af",
                 "responses": {
                     "200": {
                         "description": "Déconnexion réussie",
@@ -573,13 +573,13 @@
                 ]
             }
         },
-        "/api/v1/consultations": {
+        "/consultations": {
             "get": {
                 "tags": [
                     "Consultations"
                 ],
                 "summary": "Liste des consultations",
-                "operationId": "7249264c980cd71235d7e4bf495e3fcf",
+                "operationId": "03192b1632d51781c7469b20e2771020",
                 "parameters": [
                     {
                         "name": "per_page",
@@ -687,7 +687,7 @@
                     "Consultations"
                 ],
                 "summary": "Créer une consultation",
-                "operationId": "a9a1a44533a2e508386766b9ac5e5ba8",
+                "operationId": "8814cd9ef86cdeb5714a8f93ce171ece",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -747,13 +747,13 @@
                 ]
             }
         },
-        "/api/v1/consultations/{id}": {
+        "/consultations/{id}": {
             "get": {
                 "tags": [
                     "Consultations"
                 ],
                 "summary": "Détail d'une consultation",
-                "operationId": "22a4e3283580feace4ad1c526f925dd1",
+                "operationId": "ddda2ef98860f6b520680074ddb85f87",
                 "parameters": [
                     {
                         "name": "id",
@@ -817,7 +817,7 @@
                     "Consultations"
                 ],
                 "summary": "Mettre à jour une consultation",
-                "operationId": "3d80c73917beebe343f0a552e1430dd9",
+                "operationId": "d69433326d6660dffcfeb96fe305f13f",
                 "parameters": [
                     {
                         "name": "id",
@@ -897,13 +897,13 @@
                 ]
             }
         },
-        "/api/v1/consultations/{id}/cloturer": {
+        "/consultations/{id}/cloturer": {
             "patch": {
                 "tags": [
                     "Consultations"
                 ],
                 "summary": "Cloturer une consultation",
-                "operationId": "3ddb4b94dca0d88592c012ff8125a25e",
+                "operationId": "1cf35e68898921f6b0aeb1f302d6b889",
                 "parameters": [
                     {
                         "name": "id",
@@ -983,13 +983,13 @@
                 ]
             }
         },
-        "/api/v1/consultations/{id}/reprogrammer": {
+        "/consultations/{id}/reprogrammer": {
             "patch": {
                 "tags": [
                     "Consultations"
                 ],
                 "summary": "Reprogrammer un rendez-vous de suivi",
-                "operationId": "35249f4a569d7d8497af362a160f393c",
+                "operationId": "6f9ad55c9f58ce22d6d01e10f20cd0e0",
                 "parameters": [
                     {
                         "name": "id",
@@ -1069,13 +1069,13 @@
                 ]
             }
         },
-        "/api/v1/dossiers/{id}": {
+        "/dossiers/{id}": {
             "get": {
                 "tags": [
                     "Dossiers"
                 ],
                 "summary": "Consulter un dossier médical",
-                "operationId": "77d4db45fe152f8942688d7f44581fe5",
+                "operationId": "8a1ee896b295d3602dcfc17239897b79",
                 "parameters": [
                     {
                         "name": "id",
@@ -1139,7 +1139,7 @@
                     "Dossiers"
                 ],
                 "summary": "Mettre à jour un dossier médical",
-                "operationId": "2d2d05eeb845029010ed5df50d2cfda6",
+                "operationId": "ac7d88cd1c0594fbf6275a3f13a7b8cf",
                 "parameters": [
                     {
                         "name": "id",
@@ -1219,13 +1219,13 @@
                 ]
             }
         },
-        "/api/v1/journal": {
+        "/journal": {
             "get": {
                 "tags": [
                     "Journal Audit"
                 ],
                 "summary": "Lister les journaux d'audit",
-                "operationId": "335010825589a42f4c3a8cd74d61f076",
+                "operationId": "1c2cec88c75a48703c28fef96cc5716c",
                 "parameters": [
                     {
                         "name": "type_action",
@@ -1350,13 +1350,13 @@
                 ]
             }
         },
-        "/api/v1/journal/{id}": {
+        "/journal/{id}": {
             "get": {
                 "tags": [
                     "Journal Audit"
                 ],
                 "summary": "Afficher le détail d'un journal d'audit",
-                "operationId": "c6199dea832567f0a33e2b765231c692",
+                "operationId": "67e162ee792b06ad3a5d415945471bc1",
                 "parameters": [
                     {
                         "name": "id",
@@ -1416,13 +1416,13 @@
                 ]
             }
         },
-        "/api/v1/journal/export": {
+        "/journal/export": {
             "get": {
                 "tags": [
                     "Journal Audit"
                 ],
                 "summary": "Exporter les journaux d'audit en CSV",
-                "operationId": "68eb3e10dea6a78e3dc8ebabd38cbc0d",
+                "operationId": "1ecdbe9955f6046e60a3295d3906de3c",
                 "parameters": [
                     {
                         "name": "type_action",
@@ -1510,13 +1510,13 @@
                 ]
             }
         },
-        "/api/v1/medecins": {
+        "/medecins": {
             "get": {
                 "tags": [
                     "Medecins"
                 ],
                 "summary": "Liste des médecins",
-                "operationId": "7e2548ff1dde4cf2a043ef7bab63b7a4",
+                "operationId": "ee8d23e77b5ca96cdfc36fd4b2a325ad",
                 "parameters": [
                     {
                         "name": "per_page",
@@ -1608,7 +1608,7 @@
                     "Medecins"
                 ],
                 "summary": "Créer un médecin",
-                "operationId": "8ad0248a856ba6f2734d60ae93959e9a",
+                "operationId": "b296aa807e37b7065dd12d7434c14cff",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1658,13 +1658,13 @@
                 ]
             }
         },
-        "/api/v1/medecins/{id}": {
+        "/medecins/{id}": {
             "get": {
                 "tags": [
                     "Medecins"
                 ],
                 "summary": "Afficher un médecin",
-                "operationId": "5ebd2846ccca9c035cc953ad5031899a",
+                "operationId": "4c914d34aad685f9e769577319629b23",
                 "parameters": [
                     {
                         "name": "id",
@@ -1718,7 +1718,7 @@
                     "Medecins"
                 ],
                 "summary": "Mettre à jour un médecin",
-                "operationId": "38fac10969aba29329047e60cb79b4ab",
+                "operationId": "6ad1fd53a8e6eedf672d502906374ac0",
                 "parameters": [
                     {
                         "name": "id",
@@ -1792,7 +1792,7 @@
                     "Medecins"
                 ],
                 "summary": "Supprimer un médecin",
-                "operationId": "425fec4c577209d013c0af879bdda906",
+                "operationId": "223ff3968b637fdd6ae601d254ca8dcd",
                 "parameters": [
                     {
                         "name": "id",
@@ -1842,13 +1842,13 @@
                 ]
             }
         },
-        "/api/v1/medecins/{id}/statut": {
+        "/medecins/{id}/statut": {
             "patch": {
                 "tags": [
                     "Medecins"
                 ],
                 "summary": "Changer le statut d'un médecin",
-                "operationId": "c91d2e419bea28be7033406fb817d1f9",
+                "operationId": "e2c69f61bafec95479ef4ec9798092c7",
                 "parameters": [
                     {
                         "name": "id",
@@ -1918,13 +1918,13 @@
                 ]
             }
         },
-        "/api/v1/medecins/{id}/planning": {
+        "/medecins/{id}/planning": {
             "get": {
                 "tags": [
                     "Medecins"
                 ],
                 "summary": "Planning d'un médecin",
-                "operationId": "93c898706052d4fc248acb918a98c991",
+                "operationId": "8342c23be2ec3c5bf639f281463a2091",
                 "parameters": [
                     {
                         "name": "id",
@@ -1974,13 +1974,13 @@
                 ]
             }
         },
-        "/api/v1/patients": {
+        "/patients": {
             "get": {
                 "tags": [
                     "Patients"
                 ],
                 "summary": "Liste des patients",
-                "operationId": "69a46ed96bac75dd121e6dc98a33c34e",
+                "operationId": "b9c0b408f3511800a33df4178b575584",
                 "parameters": [
                     {
                         "name": "per_page",
@@ -2088,7 +2088,7 @@
                     "Patients"
                 ],
                 "summary": "Créer un patient",
-                "operationId": "ba689ca69bc6286a99ce90c5eb6f868c",
+                "operationId": "61950fddd8517abd752f4bae3f7e1f95",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2148,13 +2148,13 @@
                 ]
             }
         },
-        "/api/v1/patients/{id}": {
+        "/patients/{id}": {
             "get": {
                 "tags": [
                     "Patients"
                 ],
                 "summary": "Détail d'un patient",
-                "operationId": "514d5adfebfd677bbd79e439d5abfad6",
+                "operationId": "4abd7d79081d22b0cc0977dace111a67",
                 "parameters": [
                     {
                         "name": "id",
@@ -2218,7 +2218,7 @@
                     "Patients"
                 ],
                 "summary": "Mettre à jour un patient",
-                "operationId": "de2bde6104fcd457e916b138042ef077",
+                "operationId": "8fe660040da4932f864bf9f4ba9fac92",
                 "parameters": [
                     {
                         "name": "id",
@@ -2302,7 +2302,7 @@
                     "Patients"
                 ],
                 "summary": "Supprimer un patient",
-                "operationId": "cdec4131c169cec76d16ca8b9b1ccb8e",
+                "operationId": "1e5720455f7244630af037e8ec1e83f0",
                 "parameters": [
                     {
                         "name": "id",
@@ -2362,13 +2362,13 @@
                 ]
             }
         },
-        "/api/v1/patients/mon-profil": {
+        "/patients/mon-profil": {
             "get": {
                 "tags": [
                     "Patients"
                 ],
                 "summary": "Profil du patient connecté",
-                "operationId": "3ef076942eea7421bc75816c4d7e60f2",
+                "operationId": "41d9605fbda65deb1694d934187c3d07",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2408,13 +2408,13 @@
                 ]
             }
         },
-        "/api/v1/patients/mon-dossier": {
+        "/patients/mon-dossier": {
             "get": {
                 "tags": [
                     "Patients"
                 ],
                 "summary": "Dossier médical du patient connecté",
-                "operationId": "15932d8668210bcea2ac07cbddb0d1d0",
+                "operationId": "57cee7366009066944d04295c3517952",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -2464,13 +2464,13 @@
                 ]
             }
         },
-        "/api/v1/patients/{id}/rendez-vous": {
+        "/patients/{id}/rendez-vous": {
             "get": {
                 "tags": [
                     "Patients"
                 ],
                 "summary": "Liste des rendez-vous d'un patient",
-                "operationId": "f5f1aae53f4d83f851fb207ada2d7f06",
+                "operationId": "6c7421a4a88f9c076fd506ab9bd07f84",
                 "parameters": [
                     {
                         "name": "id",
@@ -2602,13 +2602,13 @@
                 ]
             }
         },
-        "/api/v1/plannings": {
+        "/plannings": {
             "get": {
                 "tags": [
                     "Plannings"
                 ],
                 "summary": "Lister tous les plannings",
-                "operationId": "b225d15529a0f96385d481c81faacadc",
+                "operationId": "9f4a4d8481fce609587d5c8ffba3c6b4",
                 "parameters": [
                     {
                         "name": "date_debut",
@@ -2720,7 +2720,7 @@
                     "Plannings"
                 ],
                 "summary": "Creer un planning medecin",
-                "operationId": "5f302087e65ba26576366717ce87ba51",
+                "operationId": "96812b600183f8677f5fc38cd48d33fe",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2790,13 +2790,13 @@
                 ]
             }
         },
-        "/api/v1/plannings/mes-plannings": {
+        "/plannings/mes-plannings": {
             "get": {
                 "tags": [
                     "Plannings"
                 ],
                 "summary": "Lister les plannings du medecin connecte",
-                "operationId": "7634579f6b7826cc69d60a3a643b02a1",
+                "operationId": "55a10f9a11bbc124cc249fdc2b0aa975",
                 "parameters": [
                     {
                         "name": "date_debut",
@@ -2904,13 +2904,13 @@
                 ]
             }
         },
-        "/api/v1/plannings/{id}": {
+        "/plannings/{id}": {
             "get": {
                 "tags": [
                     "Plannings"
                 ],
                 "summary": "Detail d un planning",
-                "operationId": "5fa6177d946cf53f7ab06e1f3721cd04",
+                "operationId": "6ac5a9d2ee57841e51d0db341a51f148",
                 "parameters": [
                     {
                         "name": "id",
@@ -2974,7 +2974,7 @@
                     "Plannings"
                 ],
                 "summary": "Modifier un planning",
-                "operationId": "4b25a8d469d7e488286d25bf4a9d60b0",
+                "operationId": "6b3904a8630f014dd5e7612d5925c71f",
                 "parameters": [
                     {
                         "name": "id",
@@ -3068,7 +3068,7 @@
                     "Plannings"
                 ],
                 "summary": "Supprimer un planning",
-                "operationId": "d3168c89c8939b753e9ec166359a5251",
+                "operationId": "b1ccc2126693407d5adf30ce37f1f663",
                 "parameters": [
                     {
                         "name": "id",
@@ -3138,13 +3138,13 @@
                 ]
             }
         },
-        "/api/v1/plannings/{id}/rendez-vous": {
+        "/plannings/{id}/rendez-vous": {
             "get": {
                 "tags": [
                     "Plannings"
                 ],
                 "summary": "Lister les rendez-vous d un planning",
-                "operationId": "d8ce08bf5318fda547eacbe526ff55fc",
+                "operationId": "80961b6e292a6a8cec6b5c32bf998793",
                 "parameters": [
                     {
                         "name": "id",
@@ -3212,13 +3212,13 @@
                 ]
             }
         },
-        "/api/v1/rendez-vous/{id}": {
+        "/rendez-vous/{id}": {
             "get": {
                 "tags": [
                     "RendezVous"
                 ],
                 "summary": "Détail d'un rendez-vous",
-                "operationId": "1b52aa37ffe5a9d96266bebe892bedcc",
+                "operationId": "dbd4421bfa4094ec6d283d634fb3da50",
                 "parameters": [
                     {
                         "name": "id",
@@ -3278,13 +3278,13 @@
                 ]
             }
         },
-        "/api/v1/rendez-vous/mes-rendez-vous": {
+        "/rendez-vous/mes-rendez-vous": {
             "get": {
                 "tags": [
                     "RendezVous"
                 ],
                 "summary": "Liste des rendez-vous du patient connecté",
-                "operationId": "b3f2dac99708e64691f832a3e75c2d9e",
+                "operationId": "18f2d5f8c28c1e20b4039570e26734d0",
                 "parameters": [
                     {
                         "name": "per_page",
@@ -3388,13 +3388,13 @@
                 ]
             }
         },
-        "/api/v1/rendez-vous/{id}/annuler": {
+        "/rendez-vous/{id}/annuler": {
             "patch": {
                 "tags": [
                     "RendezVous"
                 ],
                 "summary": "Annuler un rendez-vous",
-                "operationId": "4a6948368e94619c11a5b02d6c085fc4",
+                "operationId": "0fd10cb51260ccb14eb332cde574916a",
                 "parameters": [
                     {
                         "name": "id",
@@ -3454,13 +3454,13 @@
                 ]
             }
         },
-        "/api/v1/rendez-vous/{id}/statut": {
+        "/rendez-vous/{id}/statut": {
             "patch": {
                 "tags": [
                     "RendezVous"
                 ],
                 "summary": "Changer le statut d'un rendez-vous",
-                "operationId": "f757a099f4d77a0aa5f71981369a89bb",
+                "operationId": "8717e119492cdb2e6f85ab1f89a8e04c",
                 "parameters": [
                     {
                         "name": "id",
@@ -3530,13 +3530,13 @@
                 ]
             }
         },
-        "/api/v1/services/disponibles": {
+        "/services/disponibles": {
             "get": {
                 "tags": [
                     "RendezVous"
                 ],
                 "summary": "Liste des services médicaux disponibles",
-                "operationId": "e0411af3fbe4713c0c0df894389da907",
+                "operationId": "6a27906ee002d1bb227457835a57c3ad",
                 "parameters": [
                     {
                         "name": "per_page",
@@ -3640,13 +3640,13 @@
                 ]
             }
         },
-        "/api/v1/secretaires": {
+        "/secretaires": {
             "get": {
                 "tags": [
                     "Secretaires"
                 ],
                 "summary": "Liste des secrétaires",
-                "operationId": "30150500de6399fabf3082078a3afb62",
+                "operationId": "f7c19b7328b096957032fe048ad2d4b6",
                 "parameters": [
                     {
                         "name": "per_page",
@@ -3730,7 +3730,7 @@
                     "Secretaires"
                 ],
                 "summary": "Créer un secrétaire",
-                "operationId": "582f5b58e55a4a17f8d2fbec371928fe",
+                "operationId": "4fcb5a1c1bb9d73cf92ecab3c93914e9",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -3780,13 +3780,13 @@
                 ]
             }
         },
-        "/api/v1/secretaires/{id}": {
+        "/secretaires/{id}": {
             "get": {
                 "tags": [
                     "Secretaires"
                 ],
                 "summary": "Afficher un secrétaire",
-                "operationId": "e3244a1976ed12ad8039ce51d3de0a30",
+                "operationId": "c175331cb4d384912dd1554bc8782220",
                 "parameters": [
                     {
                         "name": "id",
@@ -3835,68 +3835,12 @@
                     }
                 ]
             },
-            "delete": {
-                "tags": [
-                    "Secretaires"
-                ],
-                "summary": "Supprimer un secrétaire",
-                "operationId": "0b56f9511958771abd7f80915e2538e1",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/MessageResponse"
-                                }
-                            }
-                        }
-                    },
-                    "401": {
-                        "description": "Non authentifié",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Introuvable",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ErrorResponse"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ]
-            }
-        },
-        "/api/v1/secretaires{id}": {
             "put": {
                 "tags": [
                     "Secretaires"
                 ],
                 "summary": "Mettre à jour un secrétaire",
-                "operationId": "8ef8cc84e322e3adc5b80816e033e700",
+                "operationId": "fcdf201dd0a01b07215b5779b9afe3af",
                 "parameters": [
                     {
                         "name": "id",
@@ -3964,15 +3908,69 @@
                         "bearerAuth": []
                     }
                 ]
+            },
+            "delete": {
+                "tags": [
+                    "Secretaires"
+                ],
+                "summary": "Supprimer un secrétaire",
+                "operationId": "4e32746690b0145c15efaccad1f32bbd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MessageResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Introuvable",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
-        "/api/v1/secretaires/{id}/statut": {
+        "/secretaires/{id}/statut": {
             "patch": {
                 "tags": [
                     "Secretaires"
                 ],
                 "summary": "Changer le statut d'un secrétaire",
-                "operationId": "f4b82be9091d09c72b220da6c83b5d47",
+                "operationId": "d9ad6b902143336653e48f56df6fbce3",
                 "parameters": [
                     {
                         "name": "id",
@@ -4042,13 +4040,13 @@
                 ]
             }
         },
-        "/api/v1/services": {
+        "/services": {
             "get": {
                 "tags": [
                     "Services"
                 ],
                 "summary": "Liste des services",
-                "operationId": "0826b93a7d1d70b9c3047964d8d59844",
+                "operationId": "7c815908375e9fd25e807631d2bec3a4",
                 "parameters": [
                     {
                         "name": "per_page",
@@ -4140,7 +4138,7 @@
                     "Services"
                 ],
                 "summary": "Créer un service",
-                "operationId": "418eb8cff44b4a6be71988ef0fcd6f95",
+                "operationId": "eef6f9dac69df78418cb7f756a6a29fa",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -4190,13 +4188,13 @@
                 ]
             }
         },
-        "/api/v1/services/{id}": {
+        "/services/{id}": {
             "get": {
                 "tags": [
                     "Services"
                 ],
                 "summary": "Détail du service (avec médecins)",
-                "operationId": "c022b2bb04f2fcf5b5bb1e33f73b8dea",
+                "operationId": "3f40e1f290ca7aaf44733f7c3477106a",
                 "parameters": [
                     {
                         "name": "id",
@@ -4250,7 +4248,7 @@
                     "Services"
                 ],
                 "summary": "Mettre à jour un service",
-                "operationId": "e9f36cad221f8b813679238d15fd861c",
+                "operationId": "9096061ce1e8e1933f3291b810a10483",
                 "parameters": [
                     {
                         "name": "id",
@@ -4324,7 +4322,7 @@
                     "Services"
                 ],
                 "summary": "Supprimer un service",
-                "operationId": "2b772b224138cef55e7d1f5613a99429",
+                "operationId": "34c8e7fa18aa378fd9b59485ca23638d",
                 "parameters": [
                     {
                         "name": "id",
@@ -4374,13 +4372,13 @@
                 ]
             }
         },
-        "/api/v1/statistiques/admin": {
+        "/statistiques/admin": {
             "get": {
                 "tags": [
                     "Statistiques"
                 ],
                 "summary": "Récupérer le tableau de bord administrateur",
-                "operationId": "279aa2a7aa203ef3847cb51d57de5433",
+                "operationId": "249372bca8f5d7a9a5c6e55307df2de2",
                 "responses": {
                     "200": {
                         "description": "Statistiques administrateur",
@@ -4420,13 +4418,13 @@
                 ]
             }
         },
-        "/api/v1/statistiques/medecin": {
+        "/statistiques/medecin": {
             "get": {
                 "tags": [
                     "Statistiques"
                 ],
                 "summary": "Récupérer le tableau de bord médecin",
-                "operationId": "1ed4ef079a4c8f5a3c96461e418f8320",
+                "operationId": "9dabd22164b981cb02c273ae8c598955",
                 "responses": {
                     "200": {
                         "description": "Statistiques médecin",
@@ -4466,13 +4464,13 @@
                 ]
             }
         },
-        "/api/v1/statistiques/secretaire": {
+        "/statistiques/secretaire": {
             "get": {
                 "tags": [
                     "Statistiques"
                 ],
                 "summary": "Récupérer le tableau de bord secrétaire",
-                "operationId": "3a66e8b392ff1a0a91c746628df26155",
+                "operationId": "fa99c6430ee3e8778e74ccbb8377c04e",
                 "responses": {
                     "200": {
                         "description": "Statistiques secrétaire",

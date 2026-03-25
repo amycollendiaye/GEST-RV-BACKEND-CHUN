@@ -28,7 +28,7 @@ class SecretaireController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/secretaires",
+     *     path="/secretaires",
      *     tags={"Secretaires"},
      *     summary="Liste des secrétaires",
      *     security={{"bearerAuth":{}}},
@@ -77,7 +77,7 @@ class SecretaireController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/secretaires",
+     *     path="/secretaires",
      *     tags={"Secretaires"},
      *     summary="Créer un secrétaire",
      *     security={{"bearerAuth":{}}},
@@ -118,7 +118,7 @@ class SecretaireController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/secretaires/{id}",
+     *     path="/secretaires/{id}",
      *     tags={"Secretaires"},
      *     summary="Afficher un secrétaire",
      *     security={{"bearerAuth":{}}},
@@ -159,7 +159,7 @@ class SecretaireController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/v1/secretaires{id}",
+     *     path="/secretaires/{id}",
      *     tags={"Secretaires"},
      *     summary="Mettre à jour un secrétaire",
      *     security={{"bearerAuth":{}}},
@@ -211,7 +211,7 @@ class SecretaireController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/secretaires/{id}",
+     *     path="/secretaires/{id}",
      *     tags={"Secretaires"},
      *     summary="Supprimer un secrétaire",
      *     security={{"bearerAuth":{}}},
@@ -254,7 +254,7 @@ class SecretaireController extends Controller
 
     /**
      * @OA\Patch(
-     *     path="/api/v1/secretaires/{id}/statut",
+     *     path="/secretaires/{id}/statut",
      *     tags={"Secretaires"},
      *     summary="Changer le statut d'un secrétaire",
      *     security={{"bearerAuth":{}}},

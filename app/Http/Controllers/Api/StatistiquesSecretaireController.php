@@ -16,7 +16,7 @@ class StatistiquesSecretaireController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/statistiques/secretaire",
+     *     path="/statistiques/secretaire",
      *     tags={"Statistiques"},
      *     summary="Récupérer le tableau de bord secrétaire",
      *     security={{"bearerAuth":{}}},

@@ -21,7 +21,7 @@ class DossierMedicalController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/dossiers/{id}",
+     *     path="/dossiers/{id}",
      *     tags={"Dossiers"},
      *     summary="Consulter un dossier médical",
      *     security={{"bearerAuth":{}}},
@@ -67,7 +67,7 @@ class DossierMedicalController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/v1/dossiers/{id}",
+     *     path="/dossiers/{id}",
      *     tags={"Dossiers"},
      *     summary="Mettre à jour un dossier médical",
      *     security={{"bearerAuth":{}}},

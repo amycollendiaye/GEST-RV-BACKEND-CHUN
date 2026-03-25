@@ -16,7 +16,7 @@ class StatistiquesMedecinController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/statistiques/medecin",
+     *     path="/statistiques/medecin",
      *     tags={"Statistiques"},
      *     summary="Récupérer le tableau de bord médecin",
      *     security={{"bearerAuth":{}}},

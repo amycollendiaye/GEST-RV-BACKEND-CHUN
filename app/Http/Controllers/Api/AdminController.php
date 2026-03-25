@@ -15,7 +15,7 @@ class AdminController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/admin/register",
+     *     path="/admin/register",
      *     tags={"Admin"},
      *     summary="Créer le premier administrateur",
      *     @OA\RequestBody(

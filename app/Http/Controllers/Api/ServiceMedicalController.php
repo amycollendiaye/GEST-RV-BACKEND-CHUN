@@ -26,7 +26,7 @@ class ServiceMedicalController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/services",
+     *     path="/services",
      *     tags={"Services"},
      *     summary="Liste des services",
      *     security={{"bearerAuth":{}}},
@@ -77,7 +77,7 @@ class ServiceMedicalController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/services",
+     *     path="/services",
      *     tags={"Services"},
      *     summary="Créer un service",
      *     security={{"bearerAuth":{}}},
@@ -118,7 +118,7 @@ class ServiceMedicalController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/services/{id}",
+     *     path="/services/{id}",
      *     tags={"Services"},
      *     summary="Détail du service (avec médecins)",
      *     security={{"bearerAuth":{}}},
@@ -159,7 +159,7 @@ class ServiceMedicalController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/v1/services/{id}",
+     *     path="/services/{id}",
      *     tags={"Services"},
      *     summary="Mettre à jour un service",
      *     security={{"bearerAuth":{}}},
@@ -211,7 +211,7 @@ class ServiceMedicalController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/services/{id}",
+     *     path="/services/{id}",
      *     tags={"Services"},
      *     summary="Supprimer un service",
      *     security={{"bearerAuth":{}}},

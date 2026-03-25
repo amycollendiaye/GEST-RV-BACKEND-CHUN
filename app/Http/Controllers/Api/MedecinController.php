@@ -28,7 +28,7 @@ class MedecinController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/medecins",
+     *     path="/medecins",
      *     tags={"Medecins"},
      *     summary="Liste des médecins",
      *     security={{"bearerAuth":{}}},
@@ -79,7 +79,7 @@ class MedecinController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/medecins",
+     *     path="/medecins",
      *     tags={"Medecins"},
      *     summary="Créer un médecin",
      *     security={{"bearerAuth":{}}},
@@ -120,7 +120,7 @@ class MedecinController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/medecins/{id}",
+     *     path="/medecins/{id}",
      *     tags={"Medecins"},
      *     summary="Afficher un médecin",
      *     security={{"bearerAuth":{}}},
@@ -161,7 +161,7 @@ class MedecinController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/v1/medecins/{id}",
+     *     path="/medecins/{id}",
      *     tags={"Medecins"},
      *     summary="Mettre à jour un médecin",
      *     security={{"bearerAuth":{}}},
@@ -213,7 +213,7 @@ class MedecinController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/medecins/{id}",
+     *     path="/medecins/{id}",
      *     tags={"Medecins"},
      *     summary="Supprimer un médecin",
      *     security={{"bearerAuth":{}}},
@@ -256,7 +256,7 @@ class MedecinController extends Controller
 
     /**
      * @OA\Patch(
-     *     path="/api/v1/medecins/{id}/statut",
+     *     path="/medecins/{id}/statut",
      *     tags={"Medecins"},
      *     summary="Changer le statut d'un médecin",
      *     security={{"bearerAuth":{}}},
@@ -312,7 +312,7 @@ class MedecinController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/medecins/{id}/planning",
+     *     path="/medecins/{id}/planning",
      *     tags={"Medecins"},
      *     summary="Planning d'un médecin",
      *     security={{"bearerAuth":{}}},

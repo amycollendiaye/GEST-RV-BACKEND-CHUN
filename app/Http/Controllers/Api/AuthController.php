@@ -22,7 +22,7 @@ class AuthController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/auth/login",
+     *     path="/auth/login",
      *     tags={"Auth"},
      *     summary="Connexion",
      *     @OA\RequestBody(
@@ -89,7 +89,7 @@ class AuthController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/auth/change-password",
+     *     path="/auth/change-password",
      *     tags={"Auth"},
      *     summary="Changer le mot de passe (première connexion)",
      *     @OA\RequestBody(
@@ -147,7 +147,7 @@ class AuthController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/auth/logout",
+     *     path="/auth/logout",
      *     tags={"Auth"},
      *     summary="Déconnexion",
      *     security={{"bearerAuth":{}}},

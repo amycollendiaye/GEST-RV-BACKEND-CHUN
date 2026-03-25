@@ -29,7 +29,7 @@ class ConsultationController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/consultations",
+     *     path="/consultations",
      *     tags={"Consultations"},
      *     summary="Liste des consultations",
      *     security={{"bearerAuth":{}}},
@@ -84,7 +84,7 @@ class ConsultationController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/consultations",
+     *     path="/consultations",
      *     tags={"Consultations"},
      *     summary="Créer une consultation",
      *     security={{"bearerAuth":{}}},
@@ -131,7 +131,7 @@ class ConsultationController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/consultations/{id}",
+     *     path="/consultations/{id}",
      *     tags={"Consultations"},
      *     summary="Détail d'une consultation",
      *     security={{"bearerAuth":{}}},
@@ -177,7 +177,7 @@ class ConsultationController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/v1/consultations/{id}",
+     *     path="/consultations/{id}",
      *     tags={"Consultations"},
      *     summary="Mettre à jour une consultation",
      *     security={{"bearerAuth":{}}},
@@ -234,7 +234,7 @@ class ConsultationController extends Controller
 
     /**
      * @OA\Patch(
-     *     path="/api/v1/consultations/{id}/cloturer",
+     *     path="/consultations/{id}/cloturer",
      *     tags={"Consultations"},
      *     summary="Cloturer une consultation",
      *     security={{"bearerAuth":{}}},
@@ -284,7 +284,7 @@ class ConsultationController extends Controller
 
     /**
      * @OA\Patch(
-     *     path="/api/v1/consultations/{id}/reprogrammer",
+     *     path="/consultations/{id}/reprogrammer",
      *     tags={"Consultations"},
      *     summary="Reprogrammer un rendez-vous de suivi",
      *     security={{"bearerAuth":{}}},

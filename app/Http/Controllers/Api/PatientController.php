@@ -33,7 +33,7 @@ class PatientController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/patients",
+     *     path="/patients",
      *     tags={"Patients"},
      *     summary="Liste des patients",
      *     security={{"bearerAuth":{}}},
@@ -88,7 +88,7 @@ class PatientController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/patients",
+     *     path="/patients",
      *     tags={"Patients"},
      *     summary="Créer un patient",
      *     security={{"bearerAuth":{}}},
@@ -138,7 +138,7 @@ class PatientController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/patients/{id}",
+     *     path="/patients/{id}",
      *     tags={"Patients"},
      *     summary="Détail d'un patient",
      *     security={{"bearerAuth":{}}},
@@ -184,7 +184,7 @@ class PatientController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/v1/patients/{id}",
+     *     path="/patients/{id}",
      *     tags={"Patients"},
      *     summary="Mettre à jour un patient",
      *     security={{"bearerAuth":{}}},
@@ -247,7 +247,7 @@ class PatientController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/v1/patients/{id}",
+     *     path="/patients/{id}",
      *     tags={"Patients"},
      *     summary="Supprimer un patient",
      *     security={{"bearerAuth":{}}},
@@ -295,7 +295,7 @@ class PatientController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/patients/mon-profil",
+     *     path="/patients/mon-profil",
      *     tags={"Patients"},
      *     summary="Profil du patient connecté",
      *     security={{"bearerAuth":{}}},
@@ -333,7 +333,7 @@ class PatientController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/patients/mon-dossier",
+     *     path="/patients/mon-dossier",
      *     tags={"Patients"},
      *     summary="Dossier médical du patient connecté",
      *     security={{"bearerAuth":{}}},
@@ -381,7 +381,7 @@ class PatientController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/patients/{id}/rendez-vous",
+     *     path="/patients/{id}/rendez-vous",
      *     tags={"Patients"},
      *     summary="Liste des rendez-vous d'un patient",
      *     security={{"bearerAuth":{}}},

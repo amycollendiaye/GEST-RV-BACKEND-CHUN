@@ -18,7 +18,7 @@ class AttributionRendezVousController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/v1/rendez-vous",
+     *     path="/rendez-vous",
      *     tags={"RendezVous"},
      *     summary="Creer un rendez-vous avec attribution automatique",
      *     security={{"bearerAuth":{}}},

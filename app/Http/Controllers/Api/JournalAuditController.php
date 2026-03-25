@@ -21,7 +21,7 @@ class JournalAuditController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/journal",
+     *     path="/journal",
      *     tags={"Journal Audit"},
      *     summary="Lister les journaux d'audit",
      *     security={{"bearerAuth":{}}},
@@ -74,7 +74,7 @@ class JournalAuditController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/journal/{id}",
+     *     path="/journal/{id}",
      *     tags={"Journal Audit"},
      *     summary="Afficher le détail d'un journal d'audit",
      *     security={{"bearerAuth":{}}},
@@ -125,7 +125,7 @@ class JournalAuditController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/v1/journal/export",
+     *     path="/journal/export",
      *     tags={"Journal Audit"},
      *     summary="Exporter les journaux d'audit en CSV",
      *     security={{"bearerAuth":{}}},
