@@ -31,6 +31,10 @@ use App\Repositories\RendezVousRepository;
 use App\Repositories\SecretaireRepository;
 use App\Repositories\ServiceMedicalRepository;
 use App\Services\Interfaces\SmsNotificationInterface;
+use App\Services\Me\GetAdminMeService;
+use App\Services\Me\GetMedecinMeService;
+use App\Services\Me\GetPatientMeService;
+use App\Services\Me\GetSecretaireMeService;
 use App\Services\SmsNotificationService;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -52,6 +56,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(DossierMedicalRepositoryInterface::class, DossierMedicalRepository::class);
         $this->app->bind(ConsultationRepositoryInterface::class, ConsultationRepository::class);
         $this->app->bind(JournalAuditRepositoryInterface::class, JournalAuditRepository::class);
+        $this->app->bind(GetAdminMeService::class, GetAdminMeService::class);
+        $this->app->bind(GetMedecinMeService::class, GetMedecinMeService::class);
+        $this->app->bind(GetSecretaireMeService::class, GetSecretaireMeService::class);
+        $this->app->bind(GetPatientMeService::class, GetPatientMeService::class);
         $this->app->bind(SmsNotificationInterface::class, SmsNotificationService::class);
     }
 

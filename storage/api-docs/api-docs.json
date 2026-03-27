@@ -573,6 +573,207 @@
                 ]
             }
         },
+        "/auth/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Profil de l'utilisateur connecté",
+                "description": "Récupère le profil de l'utilisateur connecté en fonction de son rôle",
+                "operationId": "d979435daef589607ca253a8f14ce5f1",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/AdminMeResponse"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/MedecinMeResponse"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/SecretaireMeResponse"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/PatientMeResponse"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/me/admin": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Profil administrateur",
+                "description": "Récupère le profil de l'administrateur connecté",
+                "operationId": "f581a88afce972985427edadea83b827",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/AdminMeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/me/medecin": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Profil médecin",
+                "description": "Récupère le profil du médecin connecté",
+                "operationId": "8d6ebee4f3920dea167eebdaa2ee174d",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/MedecinMeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/me/secretaire": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Profil secrétaire",
+                "description": "Récupère le profil du secrétaire connecté",
+                "operationId": "097d2d2faec50950552c2d48e9ec3ad5",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SecretaireMeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/consultations": {
             "get": {
                 "tags": [
@@ -6373,6 +6574,82 @@
                     "data": {
                         "type": "object",
                         "additionalProperties": true
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "AdminMeResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Profil administrateur recupere avec succes"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Medecin"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "MedecinMeResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Profil medecin recupere avec succes"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Medecin"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "SecretaireMeResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Profil secretaire recupere avec succes"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Secretaire"
+                    },
+                    "errors": {
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "PatientMeResponse": {
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "example": true
+                    },
+                    "message": {
+                        "type": "string",
+                        "example": "Profil patient recupere avec succes"
+                    },
+                    "data": {
+                        "$ref": "#/components/schemas/Patient"
                     },
                     "errors": {
                         "nullable": true

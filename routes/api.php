@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AdminController;
 use App\Http\Controllers\Api\ActivationController;
 use App\Http\Controllers\Api\AttributionRendezVousController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\AuthMeController;
 use App\Http\Controllers\Api\ConsultationController;
 use App\Http\Controllers\Api\DossierMedicalController;
 use App\Http\Controllers\Api\JournalAuditController;
@@ -38,6 +39,11 @@ Route::post('/activation/password', [ActivationController::class, 'updatePasswor
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('journal.auth');
+    Route::get("/auth/me", [AuthMeController::class, 'me']);
+    Route::get('/auth/me/admin', [AuthMeController::class, 'meAdmin']);
+    Route::get('/auth/me/medecin', [AuthMeController::class, 'meMedecin']);
+    Route::get('/auth/me/secretaire', [AuthMeController::class, 'meSecretaire']);
+    Route::get('/auth/me/patient', [AuthMeController::class, 'mePatient']);
 
     Route::get('/journal/export', [JournalAuditController::class, 'export']);
     Route::get('/journal', [JournalAuditController::class, 'index']);

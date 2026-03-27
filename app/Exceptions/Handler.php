@@ -66,13 +66,16 @@ class Handler extends ExceptionHandler
             }
 
             if ($e instanceof AuthorizationException) {
+                $detail = trim((string) $e->getMessage());
+                $message = $detail !== '' ? $detail : 'Acces refuse';
+
                 return response()->json([
                     'success' => false,
-                    'message' => 'Acces refuse',
+                    'message' => $message,
                     'data' => null,
                     'errors' => [
                         'type' => 'authorization',
-                        'detail' => 'Vous n avez pas les droits pour acceder a cette ressource.',
+                        'detail' => $detail !== '' ? $detail : 'Vous n avez pas les droits pour acceder a cette ressource.',
                     ],
                 ], 403);
             }

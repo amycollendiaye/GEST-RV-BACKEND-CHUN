@@ -739,6 +739,38 @@ use Illuminate\Routing\Controller as BaseController;
  *     @OA\Property(property="data", type="object", additionalProperties=true),
  *     @OA\Property(property="errors", nullable=true)
  * )
+ * @OA\Schema(
+ *     schema="AdminMeResponse",
+ *     type="object",
+ *     @OA\Property(property="success", type="boolean", example=true),
+ *     @OA\Property(property="message", type="string", example="Profil administrateur recupere avec succes"),
+ *     @OA\Property(property="data", ref="#/components/schemas/Medecin"),
+ *     @OA\Property(property="errors", nullable=true)
+ * )
+ * @OA\Schema(
+ *     schema="MedecinMeResponse",
+ *     type="object",
+ *     @OA\Property(property="success", type="boolean", example=true),
+ *     @OA\Property(property="message", type="string", example="Profil medecin recupere avec succes"),
+ *     @OA\Property(property="data", ref="#/components/schemas/Medecin"),
+ *     @OA\Property(property="errors", nullable=true)
+ * )
+ * @OA\Schema(
+ *     schema="SecretaireMeResponse",
+ *     type="object",
+ *     @OA\Property(property="success", type="boolean", example=true),
+ *     @OA\Property(property="message", type="string", example="Profil secretaire recupere avec succes"),
+ *     @OA\Property(property="data", ref="#/components/schemas/Secretaire"),
+ *     @OA\Property(property="errors", nullable=true)
+ * )
+ * @OA\Schema(
+ *     schema="PatientMeResponse",
+ *     type="object",
+ *     @OA\Property(property="success", type="boolean", example=true),
+ *     @OA\Property(property="message", type="string", example="Profil patient recupere avec succes"),
+ *     @OA\Property(property="data", ref="#/components/schemas/Patient"),
+ *     @OA\Property(property="errors", nullable=true)
+ * )
  */
 class Controller extends BaseController
 {

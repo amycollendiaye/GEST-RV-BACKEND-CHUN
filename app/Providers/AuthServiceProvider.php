@@ -8,6 +8,7 @@ use App\Models\ServiceMedical;
 use App\Policies\ConsultationPolicy;
 use App\Policies\DossierMedicalPolicy;
 use App\Policies\JournalAuditPolicy;
+use App\Policies\MePolicy;
 use App\Policies\MedecinPolicy;
 use App\Policies\PatientPolicy;
 use App\Policies\PlanningMedecinPolicy;
@@ -88,6 +89,10 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('journal.viewAny', [JournalAuditPolicy::class, 'viewAny']);
         Gate::define('journal.view', [JournalAuditPolicy::class, 'view']);
         Gate::define('journal.export', [JournalAuditPolicy::class, 'export']);
+        Gate::define('me.viewAdmin', [MePolicy::class, 'viewAdmin']);
+        Gate::define('me.viewMedecin', [MePolicy::class, 'viewMedecin']);
+        Gate::define('me.viewSecretaire', [MePolicy::class, 'viewSecretaire']);
+        Gate::define('me.viewPatient', [MePolicy::class, 'viewPatient']);
 
         Gate::define('statistiques.admin', function (PersonelHopital $user): Response {
             return $user->role === 'ADMIN'
