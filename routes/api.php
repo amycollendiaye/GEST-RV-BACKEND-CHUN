@@ -76,11 +76,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/secretaires/{id}', [SecretaireController::class, 'destroy']);
     Route::patch('/secretaires/{id}/statut', [SecretaireController::class, 'changerStatut']);
 
+    Route::get('/services/disponibles', [RendezVousController::class, 'servicesDisponibles']);
     Route::get('/services', [ServiceMedicalController::class, 'index']);
     Route::post('/services', [ServiceMedicalController::class, 'store']);
-    Route::get('/services/{serviceMedical}', [ServiceMedicalController::class, 'show']);
-    Route::put('/services/{serviceMedical}', [ServiceMedicalController::class, 'update']);
-    Route::delete('/services/{serviceMedical}', [ServiceMedicalController::class, 'destroy']);
+    Route::get('/services/{serviceMedical}', [ServiceMedicalController::class, 'show'])->whereUuid('serviceMedical');
+    Route::put('/services/{serviceMedical}', [ServiceMedicalController::class, 'update'])->whereUuid('serviceMedical');
+    Route::delete('/services/{serviceMedical}', [ServiceMedicalController::class, 'destroy'])->whereUuid('serviceMedical');
 
     Route::post('/patients', [PatientController::class, 'store']);
     Route::get('/patients', [PatientController::class, 'index']);
@@ -93,7 +94,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/rendez-vous', [AttributionRendezVousController::class, 'store']);
     Route::get('/rendez-vous', [RendezVousController::class, 'index']);
-    Route::get('/services/disponibles', [RendezVousController::class, 'servicesDisponibles']);
     Route::get('/rendez-vous/mes-rendez-vous', [RendezVousController::class, 'mesRendezVous']);
     Route::get('/rendez-vous/{id}', [RendezVousController::class, 'show']);
     Route::patch('/rendez-vous/{id}/annuler', [RendezVousController::class, 'annuler']);

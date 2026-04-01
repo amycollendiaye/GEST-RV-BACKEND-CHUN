@@ -18,9 +18,9 @@ class ServiceMedicalFactory extends Factory
     public function definition(): array
     {
         return [
-             'id' => Str::uuid(),
+            'id' => Str::uuid(),
 
-            'nom' => $this->faker->unique()->word(),
+            'nom' => 'service-' . Str::lower((string) Str::uuid()),
             'description' => $this->faker->sentence(),
 
             'heure_ouverture' => '08:00:00',

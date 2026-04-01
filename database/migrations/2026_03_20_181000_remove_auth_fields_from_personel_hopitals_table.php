@@ -2,10 +2,13 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    public $withinTransaction = false;
+
     public function up(): void
     {
         Schema::table('personel_hopitals', function (Blueprint $table) {
@@ -26,14 +29,25 @@ return new class extends Migration
     {
         Schema::table('personel_hopitals', function (Blueprint $table) {
             if (!Schema::hasColumn('personel_hopitals', 'login')) {
-                $table->string('login')->unique()->after('matricule');
+                $table->string('login')->nullable()->unique()->after('matricule');
             }
             if (!Schema::hasColumn('personel_hopitals', 'password')) {
-                $table->string('password')->after('login');
+                $table->string('password')->nullable()->after('login');
             }
             if (!Schema::hasColumn('personel_hopitals', 'first_login')) {
                 $table->boolean('first_login')->default(true)->after('password');
             }
         });
+
+        if (Schema::hasTable('infos_connexions')) {
+            DB::statement('
+                update personel_hopitals ph
+                set login = ic.login,
+                    password = ic.password,
+                    first_login = ic.first_login
+                from infos_connexions ic
+                where ic.personel_hopital_id = ph.id
+            ');
+        }
     }
 };

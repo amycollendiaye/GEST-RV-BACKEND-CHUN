@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    public $withinTransaction = false;
+
     public function up(): void
     {
         Schema::table('planning_medecins', function (Blueprint $table) {

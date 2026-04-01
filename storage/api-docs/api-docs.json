@@ -774,6 +774,53 @@
                 ]
             }
         },
+        "/auth/me/patient": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Profil patient",
+                "description": "Récupère le profil du patient connecté",
+                "operationId": "872d39568412710be865019a0b69ad15",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PatientMeResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Non authentifié",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Non autorisé",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/consultations": {
             "get": {
                 "tags": [
