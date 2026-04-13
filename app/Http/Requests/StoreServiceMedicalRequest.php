@@ -34,7 +34,7 @@ class StoreServiceMedicalRequest extends FormRequest
             'etat' => 'nullable|in:DISPONIBLE,INDISPONIBLE',
         ];
     }
-    protected function failedValidation(Validator $validator)
+     protected function failedValidation(Validator $validator)
     {
         // Transformer les erreurs pour obtenir seulement le premier message (sans tableau)
         $errors          = $validator->errors()->toArray();

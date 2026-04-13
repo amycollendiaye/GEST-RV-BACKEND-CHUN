@@ -9,6 +9,9 @@ login de admin
   {
   "login": "secfann20260001",
   "password": "Amycolle1@!"
+}  {
+  "login": "secfann20260001",
+  "password": "Amycolle1@!"
 }
 login medecin
 
