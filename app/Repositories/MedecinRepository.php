@@ -10,18 +10,24 @@ class MedecinRepository implements MedecinRepositoryInterface
 {
     public function findAll(array $filters, int $perPage): LengthAwarePaginator
     {
+        \Illuminate\Support\Facades\Log::info('Filtres reçus pour recherche médecins', $filters);
+
         $query = PersonelHopital::medecins()
             ->with(['serviceMedical', 'planningMedecins', 'infosConnexion']);
 
-        $query->search($filters['search'] ?? null);
+        if (!empty($filters['search'])) {
+            $query->search($filters['search']);
+        }
 
-        if (!empty($filters['statut'])) {
+        if (!empty($filters['statut']) && $filters['statut'] !== 'all') {
             $query->where('statut', $filters['statut']);
         }
 
-        $query->byService($filters['service_id'] ?? null);
+        if (!empty($filters['service_id']) && $filters['service_id'] !== 'all') {
+            $query->byService($filters['service_id']);
+        }
 
-        if (!empty($filters['specialite'])) {
+        if (!empty($filters['specialite']) && $filters['specialite'] !== 'all') {
             $query->where('specialite', $filters['specialite']);
         }
 

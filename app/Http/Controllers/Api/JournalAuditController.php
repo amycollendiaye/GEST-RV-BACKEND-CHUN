@@ -1,16 +1,18 @@
 <?php
-
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JournalAudit\FiltreJournalRequest;
-use App\Http\Resources\JournalAuditCollection;
-use App\Http\Resources\JournalAuditResource;
+use App\Http\Resources\JournalAudit\JournalAuditCollection;
+use App\Http\Resources\JournalAudit\JournalAuditResource;
 use App\Models\PersonelHopital;
 use App\Repositories\Interfaces\JournalAuditRepositoryInterface;
 use App\Services\JournalAudit\FiltreJournalService;
 use Illuminate\Support\Facades\Gate;
 
+/**
+ * @OA\Tag(name="Journal d'audit")
+ */
 class JournalAuditController extends Controller
 {
     public function __construct(
@@ -21,28 +23,25 @@ class JournalAuditController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/journal",
-     *     tags={"Journal Audit"},
-     *     summary="Lister les journaux d'audit",
-     *     security={{"bearerAuth":{}}},
+     *     path="/api/v1/journal",
+     *     summary="Liste paginée du journal d'audit",
+     *     tags={"Journal d'audit"},
+     *     security={{"sanctum": {}}},
      *     @OA\Parameter(name="type_action", in="query", required=false, @OA\Schema(type="string")),
-     *     @OA\Parameter(name="personel_id", in="query", required=false, @OA\Schema(type="string")),
+     *     @OA\Parameter(name="personel_id", in="query", required=false, @OA\Schema(type="string", format="uuid")),
      *     @OA\Parameter(name="date_debut", in="query", required=false, @OA\Schema(type="string", format="date")),
      *     @OA\Parameter(name="date_fin", in="query", required=false, @OA\Schema(type="string", format="date")),
-     *     @OA\Parameter(name="adresse_ip", in="query", required=false, @OA\Schema(type="string")),
      *     @OA\Parameter(name="search", in="query", required=false, @OA\Schema(type="string")),
-     *     @OA\Parameter(name="per_page", in="query", required=false, @OA\Schema(type="integer", default=50, maximum=200)),
-     *     @OA\Parameter(name="sort_by", in="query", required=false, @OA\Schema(type="string", enum={"created_at"})),
-     *     @OA\Parameter(name="sort_dir", in="query", required=false, @OA\Schema(type="string", enum={"asc","desc"})),
+     *     @OA\Parameter(name="per_page", in="query", required=false, @OA\Schema(type="integer", default=50)),
      *     @OA\Response(
      *         response=200,
-     *         description="Liste des journaux d'audit",
-     *         @OA\JsonContent(ref="#/components/schemas/JournalAuditListResponse")
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Non authentifié",
-     *         @OA\JsonContent(ref="#/components/schemas/ErrorResponse")
+     *         description="Succès",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Liste des journaux d'audit"),
+     *             @OA\Property(property="data", ref="#/components/schemas/JournalAuditCollection"),
+     *             @OA\Property(property="errors", type="null")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=403,
@@ -53,7 +52,8 @@ class JournalAuditController extends Controller
      */
     public function index(FiltreJournalRequest $request)
     {
-        if (!(auth()->user() instanceof PersonelHopital)) {
+        $user = auth()->user();
+        if (!$user || strtoupper($user->role) !== 'ADMIN') {
             abort(403, 'Seul l\'administrateur peut consulter les journaux d\'audit.');
         }
 
@@ -74,36 +74,32 @@ class JournalAuditController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/journal/{id}",
-     *     tags={"Journal Audit"},
-     *     summary="Afficher le détail d'un journal d'audit",
-     *     security={{"bearerAuth":{}}},
+     *     path="/api/v1/journal/{id}",
+     *     summary="Détails d'une entrée du journal",
+     *     tags={"Journal d'audit"},
+     *     security={{"sanctum": {}}},
      *     @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
      *     @OA\Response(
      *         response=200,
-     *         description="Détail du journal d'audit",
-     *         @OA\JsonContent(ref="#/components/schemas/JournalAuditResponse")
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Non authentifié",
-     *         @OA\JsonContent(ref="#/components/schemas/ErrorResponse")
+     *         description="Succès",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="success", type="boolean", example=true),
+     *             @OA\Property(property="message", type="string", example="Détails du journal"),
+     *             @OA\Property(property="data", ref="#/components/schemas/JournalAuditResource"),
+     *             @OA\Property(property="errors", type="null")
+     *         )
      *     ),
      *     @OA\Response(
      *         response=403,
      *         description="Accès interdit",
-     *         @OA\JsonContent(ref="#/components/schemas/ErrorResponse")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Journal introuvable",
      *         @OA\JsonContent(ref="#/components/schemas/ErrorResponse")
      *     )
      * )
      */
     public function show(int $id)
     {
-        if (!(auth()->user() instanceof PersonelHopital)) {
+        $user = auth()->user();
+        if (!$user || strtoupper($user->role) !== 'ADMIN') {
             abort(403, 'Seul l\'administrateur peut consulter les journaux d\'audit.');
         }
 
@@ -117,7 +113,7 @@ class JournalAuditController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Détail du journal d\'audit',
+            'message' => 'Détails du journal',
             'data' => new JournalAuditResource($journalAudit),
             'errors' => null,
         ]);
@@ -125,27 +121,14 @@ class JournalAuditController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/journal/export",
-     *     tags={"Journal Audit"},
-     *     summary="Exporter les journaux d'audit en CSV",
-     *     security={{"bearerAuth":{}}},
-     *     @OA\Parameter(name="type_action", in="query", required=false, @OA\Schema(type="string")),
-     *     @OA\Parameter(name="personel_id", in="query", required=false, @OA\Schema(type="string")),
-     *     @OA\Parameter(name="date_debut", in="query", required=false, @OA\Schema(type="string", format="date")),
-     *     @OA\Parameter(name="date_fin", in="query", required=false, @OA\Schema(type="string", format="date")),
-     *     @OA\Parameter(name="adresse_ip", in="query", required=false, @OA\Schema(type="string")),
-     *     @OA\Parameter(name="search", in="query", required=false, @OA\Schema(type="string")),
+     *     path="/api/v1/journal/export",
+     *     summary="Exporter le journal en CSV",
+     *     tags={"Journal d'audit"},
+     *     security={{"sanctum": {}}},
      *     @OA\Response(
      *         response=200,
-     *         description="Fichier CSV généré",
-     *         @OA\MediaType(
-     *             mediaType="text/csv"
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Non authentifié",
-     *         @OA\JsonContent(ref="#/components/schemas/ErrorResponse")
+     *         description="Fichier CSV",
+     *         @OA\MediaType(mediaType="text/csv")
      *     ),
      *     @OA\Response(
      *         response=403,
@@ -156,7 +139,8 @@ class JournalAuditController extends Controller
      */
     public function export(FiltreJournalRequest $request)
     {
-        if (!(auth()->user() instanceof PersonelHopital)) {
+        $user = auth()->user();
+        if (!$user || strtoupper($user->role) !== 'ADMIN') {
             abort(403, 'Seul l\'administrateur peut consulter les journaux d\'audit.');
         }
 

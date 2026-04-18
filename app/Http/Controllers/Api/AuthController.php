@@ -75,12 +75,12 @@ class AuthController extends Controller
                 'token' => $result['token'],
                 'user' => [
                     'id' => $result['user']->id,
+                    'nom' => $result['user']->nom,
+                    'prenom' => $result['user']->prenom,
                     'login' => $result['user'] instanceof Patient
                         ? $result['user']->login
                         : $result['user']->infosConnexion?->login,
-                    'role' => $result['user'] instanceof Patient
-                        ? 'PATIENT'
-                        : $result['user']->role,
+                    'role' => strtoupper($result['user'] instanceof Patient ? 'PATIENT' : $result['user']->role),
                 ],
             ],
             'errors' => null,

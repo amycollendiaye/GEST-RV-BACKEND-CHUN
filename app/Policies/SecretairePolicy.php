@@ -8,35 +8,37 @@ class SecretairePolicy
 {
     public function viewAny(PersonelHopital $user): bool
     {
-        return in_array($user->role, ['ADMIN', 'SECRETAIRE'], true);
+        $role = strtoupper($user->role);
+        return in_array($role, ['ADMIN', 'SECRETAIRE'], true);
     }
 
     public function view(PersonelHopital $user, PersonelHopital $secretaire): bool
     {
-        if (in_array($user->role, ['ADMIN', 'SECRETAIRE'], true)) {
+        $role = strtoupper($user->role);
+        if (in_array($role, ['ADMIN', 'SECRETAIRE'], true)) {
             return true;
         }
 
-        return $user->role === 'SECRETAIRE' && $user->id === $secretaire->id;
+        return $role === 'SECRETAIRE' && $user->id === $secretaire->id;
     }
 
     public function create(PersonelHopital $user): bool
     {
-        return $user->role === 'ADMIN';
+        return strtoupper($user->role) === 'ADMIN';
     }
 
     public function update(PersonelHopital $user, PersonelHopital $secretaire): bool
     {
-        return $user->role === 'ADMIN';
+        return strtoupper($user->role) === 'ADMIN';
     }
 
     public function delete(PersonelHopital $user, PersonelHopital $secretaire): bool
     {
-        return $user->role === 'ADMIN';
+        return strtoupper($user->role) === 'ADMIN';
     }
 
     public function changerStatut(PersonelHopital $user, PersonelHopital $secretaire): bool
     {
-        return $user->role === 'ADMIN';
+        return strtoupper($user->role) === 'ADMIN';
     }
 }

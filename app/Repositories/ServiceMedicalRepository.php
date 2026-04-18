@@ -10,15 +10,15 @@ class ServiceMedicalRepository implements ServiceMedicalRepositoryInterface
 {
     public function findAll(array $filters, int $perPage): LengthAwarePaginator
     {
-        $query = ServiceMedical::query();
+        $query = ServiceMedical::query()->withCount('medecins');
 
         if (!empty($filters['search'])) {
             $term = $filters['search'];
-            $query->where('nom', 'like', "%{$term}%");
+            $query->whereRaw('LOWER(nom) LIKE ?', ["%" . strtolower($term) . "%"]);
         }
 
-        if (!empty($filters['etat'])) {
-            $query->where('etat', $filters['etat']);
+        if (!empty($filters['statut'])) {
+            $query->where('etat', $filters['statut']);
         }
 
         $sortBy = $filters['sort_by'] ?? 'created_at';

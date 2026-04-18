@@ -42,7 +42,11 @@ class CreateMedecinService
             'first_login' => true,
         ]);
 
-        event(new MedecinCreated($medecin, $plainPassword));
+        try {
+            event(new MedecinCreated($medecin, $plainPassword));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Erreur lors de l\'envoi des identifiants au médecin : ' . $e->getMessage());
+        }
 
         return $medecin;
     }

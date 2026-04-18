@@ -11,7 +11,7 @@ class RendezVousPolicy
     public function viewAny(PersonelHopital|Patient $user): bool
     {
         return $user instanceof PersonelHopital
-            && in_array($user->role, ['ADMIN', 'SECRETAIRE', 'MEDECIN'], true);
+            && in_array(strtoupper($user->role), ['ADMIN', 'SECRETAIRE', 'MEDECIN'], true);
     }
 
     public function view(PersonelHopital|Patient $user, RendezVous $rendezVous): bool
@@ -20,22 +20,32 @@ class RendezVousPolicy
             return $user->id === $rendezVous->patient_id;
         }
 
-        return in_array($user->role, ['ADMIN', 'SECRETAIRE', 'MEDECIN'], true);
+        return in_array(strtoupper($user->role), ['ADMIN', 'SECRETAIRE', 'MEDECIN'], true);
     }
 
     public function create(PersonelHopital|Patient $user): bool
     {
-        return $user instanceof Patient;
+        return $user instanceof Patient || ($user instanceof PersonelHopital && strtoupper($user->role) === 'SECRETAIRE');
+    }
+
+    public function update(PersonelHopital|Patient $user, RendezVous $rendezVous): bool
+    {
+        return $user instanceof PersonelHopital
+            && in_array(strtoupper($user->role), ['ADMIN', 'SECRETAIRE'], true);
     }
 
     public function annuler(PersonelHopital|Patient $user, RendezVous $rendezVous): bool
     {
-        return $user instanceof Patient && $user->id === $rendezVous->patient_id;
+        if ($user instanceof Patient) {
+            return $user->id === $rendezVous->patient_id;
+        }
+
+        return in_array(strtoupper($user->role), ['ADMIN', 'SECRETAIRE'], true);
     }
 
     public function changerStatut(PersonelHopital|Patient $user, RendezVous $rendezVous): bool
     {
         return $user instanceof PersonelHopital
-            && in_array($user->role, ['SECRETAIRE', 'MEDECIN'], true);
+            && in_array(strtoupper($user->role), ['SECRETAIRE', 'MEDECIN', 'ADMIN'], true);
     }
 }

@@ -25,7 +25,7 @@ class JournalAuditPolicy
 
     private function authorizeAdmin(PersonelHopital $user): Response
     {
-        if ($user->role === 'ADMIN') {
+        if (strtoupper($user->role) === 'ADMIN') {
             return Response::allow();
         }
 

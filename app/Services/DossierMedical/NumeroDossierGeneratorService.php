@@ -16,7 +16,7 @@ class NumeroDossierGeneratorService
             $last = DossierMedical::withTrashed()
                 ->where('numero_dossier', 'like', $prefixWithYear . '%')
                 ->orderBy('numero_dossier', 'desc')
-                ->lockForUpdate()
+                // ->lockForUpdate()
                 ->first();
 
             $nextNumber = 1;

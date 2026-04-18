@@ -16,6 +16,7 @@ class ServiceMedicalResource extends JsonResource
             'heure_ouverture' => $this->heure_ouverture,
             'heure_fermeture' => $this->heure_fermeture,
             'etat' => $this->etat,
+            'medecins_count' => $this->medecins_count,
             'medecins' => $this->whenLoaded('medecins', function () {
                 return $this->medecins->map(fn ($medecin) => [
                     'id' => $medecin->id,

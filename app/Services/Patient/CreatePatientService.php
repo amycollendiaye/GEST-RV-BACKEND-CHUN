@@ -3,6 +3,7 @@
 namespace App\Services\Patient;
 
 use App\Events\PatientCreated;
+use App\Models\Patient;
 use App\Repositories\Interfaces\DossierMedicalRepositoryInterface;
 use App\Repositories\Interfaces\PatientRepositoryInterface;
 use App\Services\DossierMedical\NumeroDossierGeneratorService;
@@ -10,6 +11,7 @@ use App\Services\MatriculeGeneratorService;
 use App\Services\PasswordGeneratorService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class CreatePatientService
@@ -23,32 +25,41 @@ class CreatePatientService
     ) {
     }
 
-    public function execute(array $data)
+    public function execute(array $payload): Patient
     {
+        // Génération du matricule et mot de passe
         $matricule = $this->matriculeGenerator->genererPatient();
         $plainPassword = $this->passwordGenerator->genererTemporaire();
-        $login = $this->passwordGenerator->genererLoginPatientDepuisMatricule($matricule);
+        
+        $payload['matricule'] = $matricule;
+        $payload['login'] = $this->passwordGenerator->genererLoginPatientDepuisMatricule($matricule);
+        $payload['password'] = Hash::make($plainPassword, ['rounds' => 12]);
+        $payload['first_login'] = true;
+        $payload['activation_token'] = (string) Str::uuid();
+        $payload['activation_token_expires_at'] = now()->addHours(24);
 
-        $payload = array_merge($data, [
+        // Log des identifiants pour audit
+        Log::info('Creation patient - Identifiants temporaire', [
             'matricule' => $matricule,
-            'login' => $login,
-            'password' => Hash::make($plainPassword, ['rounds' => 12]),
-            'first_login' => true,
-            'activation_token' => (string) Str::uuid(),
-            'activation_token_expires_at' => now()->addHours(24),
+            'login' => $payload['login'],
+            'password_temporaire' => $plainPassword,
         ]);
 
-        $patient = DB::transaction(function () use ($payload) {
-            $patient = $this->patientRepository->create($payload);
+        // Note: Transaction supprimée car elle causait des problèmes avec PostgreSQL
+        // quand les observers (comme PatientObserver) accèdent à auth()->user()
+        Log::info('[DEBUG] Creation patient SANS transaction wrapper (transaction PostgreSQL causait des erreurs)');
+        
+        $patient = $this->patientRepository->create($payload);
+        Log::info('[DEBUG] Patient cree, id: ' . $patient->id);
 
-            $numeroDossier = $this->numeroDossierGenerator->generer();
-            $this->dossierMedicalRepository->create([
-                'numero_dossier' => $numeroDossier,
-                'patient_id' => $patient->id,
-            ]);
-
-            return $patient;
-        });
+        $numeroDossier = $this->numeroDossierGenerator->generer();
+        Log::info('[DEBUG] Numero dossier genere: ' . $numeroDossier);
+        
+        $this->dossierMedicalRepository->create([
+            'numero_dossier' => $numeroDossier,
+            'patient_id' => $patient->id,
+        ]);
+        Log::info('[DEBUG] Dossier medical cree');
 
         event(new PatientCreated($patient, $plainPassword));
 

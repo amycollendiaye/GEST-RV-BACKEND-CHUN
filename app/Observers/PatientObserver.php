@@ -16,14 +16,30 @@ class PatientObserver
 
     public function created(Patient $patient): void
     {
-        $createur = auth()->user();
+        try {
+            $createur = auth()->user();
+            
+            // Éviter d'accéder à la relation infosConnexion à l'intérieur d'une transaction
+            // car cela peut causer des problèmes de deadlock avec PostgreSQL
+            $createurLogin = null;
+            $createurRole = null;
+            
+            if ($createur instanceof PersonelHopital) {
+                // Utiliser le matricule au lieu de la relation pour éviter les problèmes
+                $createurLogin = $createur->matricule;
+                $createurRole = $createur->role;
+            }
 
-        $this->journalAuditService->journaliser(TypeAction::CREATIONDOSSIER, [
-            'matricule_patient' => $patient->matricule,
-            'nom_patient' => trim($patient->prenom . ' ' . $patient->nom),
-            'createur_login' => $createur instanceof PersonelHopital ? $createur->infosConnexion?->login : null,
-            'createur_role' => $createur instanceof PersonelHopital ? $createur->role : null,
-        ]);
+            $this->journalAuditService->journaliser(TypeAction::CREATIONDOSSIER, [
+                'matricule_patient' => $patient->matricule,
+                'nom_patient' => trim($patient->prenom . ' ' . $patient->nom),
+                'createur_login' => $createurLogin,
+                'createur_role' => $createurRole,
+            ]);
+        } catch (\Exception $e) {
+            // Ne pas bloquer la création du patient si le audit échoue
+            report($e);
+        }
     }
 
     public function updated(Patient $patient): void

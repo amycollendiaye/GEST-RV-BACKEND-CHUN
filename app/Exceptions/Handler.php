@@ -120,11 +120,13 @@ class Handler extends ExceptionHandler
 
             return response()->json([
                 'success' => false,
-                'message' => 'Erreur serveur',
+                'message' => 'Erreur technique: ' . $e->getMessage(),
                 'data' => null,
                 'errors' => [
                     'type' => 'server',
-                    'detail' => 'Une erreur interne est survenue sur le serveur.',
+                    'detail' => $e->getMessage(),
+                    'file' => $e->getFile(),
+                    'line' => $e->getLine()
                 ],
             ], 500);
         }

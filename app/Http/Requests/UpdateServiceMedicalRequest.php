@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class UpdateServiceMedicalRequest extends FormRequest
@@ -29,13 +32,40 @@ class UpdateServiceMedicalRequest extends FormRequest
             'nom_hash' => [
                 'sometimes',
                 'required',
-                Rule::unique('service_medicals', 'nom_hash')->ignore($serviceId),
+                Rule::unique('service_medicals', 'nom_hash')->ignore($serviceId)->whereNull('deleted_at'),
             ],
             'description' => 'nullable|string|max:500',
             'heure_ouverture' => 'sometimes|required|date_format:H:i',
             'heure_fermeture' => 'sometimes|required|date_format:H:i|after:heure_ouverture',
             'etat' => 'nullable|in:DISPONIBLE,INDISPONIBLE',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors()->toArray();
+        $formattedErrors = [];
+
+        foreach ($errors as $field => $messages) {
+            $key = ($field === 'nom_hash') ? 'nom' : $field;
+            $formattedErrors[$key] = is_array($messages) && count($messages) > 0
+                ? $messages[0]
+                : $messages;
+            
+            Log::info('Validation error (update)', [
+                'field' => $field,
+                'mapped_to' => $key,
+                'messages' => $messages,
+            ]);
+        }
+
+        throw new HttpResponseException(
+            response()->json([
+                'success' => false,
+                'message' => 'Erreur de validation',
+                'errors'  => $formattedErrors,
+            ], 422)
+        );
     }
 
     protected function prepareForValidation(): void

@@ -50,7 +50,6 @@ class PersonelHopital extends Authenticatable
         'prenom',
         'email',
         'telephone',
-        'specialite',
     ];
 
     protected static function booted()
@@ -126,9 +125,12 @@ class PersonelHopital extends Authenticatable
         }
 
         return $query->where(function ($q) use ($term) {
-            $q->where('nom', 'like', "%{$term}%")
-                ->orWhere('prenom', 'like', "%{$term}%")
-                ->orWhere('matricule', 'like', "%{$term}%");
+            $q->where('nom', 'ILIKE', "%{$term}%")
+              ->orWhere('prenom', 'ILIKE', "%{$term}%")
+              ->orWhere('matricule', 'ILIKE', "%{$term}%")
+              ->orWhereHas('serviceMedical', function($subQ) use ($term) {
+                  $subQ->where('nom', 'ILIKE', "%{$term}%");
+              });
         });
     }
 }

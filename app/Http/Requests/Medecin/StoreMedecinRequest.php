@@ -36,14 +36,19 @@ class StoreMedecinRequest extends FormRequest
         $formattedErrors = [];
 
         foreach ($errors as $field => $messages) {
-            $formattedErrors[$field] = is_array($messages) && count($messages) > 0
+            $key = $field;
+            if ($field === 'email_hash') $key = 'email';
+            if ($field === 'telephone_hash') $key = 'telephone';
+
+            $formattedErrors[$key] = is_array($messages) && count($messages) > 0
                 ? $messages[0]
                 : $messages;
+            
             Log::info('Validation error', [
                 'field' => $field,
+                'mapped_to' => $key,
                 'messages' => $messages,
             ]);
-
         }
 
         throw new HttpResponseException(

@@ -37,16 +37,18 @@ Route::post('/auth/change-password', [AuthController::class, 'changePassword']);
 Route::get('/activation', [ActivationController::class, 'validateToken']);
 Route::post('/activation/password', [ActivationController::class, 'updatePassword']);
 
+// TEST: Sortie du journal du groupe auth pour diagnostic
+Route::get('/journal', [JournalAuditController::class, 'index']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('journal.auth');
-    Route::get("/auth/me", [AuthMeController::class, 'me']);
+    Route::get('/auth/me', [AuthMeController::class, 'me']);
     Route::get('/auth/me/admin', [AuthMeController::class, 'meAdmin']);
     Route::get('/auth/me/medecin', [AuthMeController::class, 'meMedecin']);
     Route::get('/auth/me/secretaire', [AuthMeController::class, 'meSecretaire']);
     Route::get('/auth/me/patient', [AuthMeController::class, 'mePatient']);
 
     Route::get('/journal/export', [JournalAuditController::class, 'export']);
-    Route::get('/journal', [JournalAuditController::class, 'index']);
     Route::get('/journal/{id}', [JournalAuditController::class, 'show']);
 
     Route::get('/statistiques/admin', StatistiquesAdminController::class);
@@ -96,6 +98,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/rendez-vous', [RendezVousController::class, 'index']);
     Route::get('/rendez-vous/mes-rendez-vous', [RendezVousController::class, 'mesRendezVous']);
     Route::get('/rendez-vous/{id}', [RendezVousController::class, 'show']);
+    Route::put('/rendez-vous/{id}', [RendezVousController::class, 'update']);
     Route::patch('/rendez-vous/{id}/annuler', [RendezVousController::class, 'annuler']);
     Route::patch('/rendez-vous/{id}/statut', [RendezVousController::class, 'changerStatut']);
 

@@ -37,7 +37,7 @@ class MatriculeGeneratorService
             $last = PersonelHopital::withTrashed()
                 ->where('matricule', 'like', $prefixWithYear . '%')
                 ->orderBy('matricule', 'desc')
-                ->lockForUpdate()
+                // ->lockForUpdate()
                 ->first();
 
             $nextNumber = 1;
@@ -58,7 +58,7 @@ class MatriculeGeneratorService
             $last = Patient::withTrashed()
                 ->where('matricule', 'like', $prefixWithYear . '%')
                 ->orderBy('matricule', 'desc')
-                ->lockForUpdate()
+                // ->lockForUpdate()
                 ->first();
 
             $nextNumber = 1;

@@ -295,6 +295,34 @@ class RendezVousController extends Controller
      *     )
      * )
      */
+    public function update(Request $request, string $id)
+    {
+        $rendezVous = $this->rendezVousRepository->findById($id);
+        if (!$rendezVous) {
+            abort(404, 'Rendez-vous introuvable');
+        }
+
+        Gate::authorize('rendezvous.update', $rendezVous);
+
+        $validated = $request->validate([
+            'planning_medecin_id' => 'required|exists:planning_medecins,id',
+        ], [
+            'planning_medecin_id.required' => 'Le nouveau créneau est obligatoire.',
+            'planning_medecin_id.exists' => 'Le créneau sélectionné est invalide.',
+        ]);
+
+        $rendezVous = $this->rendezVousRepository->update($rendezVous->id, [
+            'planning_medecin_id' => $validated['planning_medecin_id'],
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Rendez-vous reprogrammé avec succès',
+            'data' => new RendezVousResource($rendezVous),
+            'errors' => null,
+        ]);
+    }
+
     public function changerStatut(Request $request, string $id)
     {
         $rendezVous = $this->rendezVousRepository->findById($id);
@@ -305,7 +333,7 @@ class RendezVousController extends Controller
         Gate::authorize('rendezvous.changerStatut', $rendezVous);
 
         $validated = $request->validate([
-            'statut' => 'required|in:PLANIFIER,FAIT,ANNULER',
+            'statut' => 'required|in:PLANIFIER,FAIT,ANNULER,ABSENT',
         ], [
             'statut.required' => 'Le statut est obligatoire.',
             'statut.in' => 'Le statut est invalide.',

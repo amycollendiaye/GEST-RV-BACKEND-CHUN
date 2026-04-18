@@ -11,7 +11,7 @@ class PlanningMedecinPolicy
     public function viewAny(PersonelHopital|Patient $user): bool
     {
         return $user instanceof PersonelHopital
-            && in_array($user->role, ['ADMIN', 'SECRETAIRE', 'MEDECIN'], true);
+            && in_array(strtoupper($user->role), ['ADMIN', 'SECRETAIRE', 'MEDECIN'], true);
     }
 
     public function view(PersonelHopital|Patient $user, PlanningMedecin $planning): bool
@@ -20,22 +20,23 @@ class PlanningMedecinPolicy
             return false;
         }
 
-        if (in_array($user->role, ['ADMIN', 'SECRETAIRE'], true)) {
+        $role = strtoupper($user->role);
+        if (in_array($role, ['ADMIN', 'SECRETAIRE'], true)) {
             return true;
         }
 
-        return $user->role === 'MEDECIN' && $planning->medecin_id === $user->id;
+        return $role === 'MEDECIN' && $planning->medecin_id === $user->id;
     }
 
     public function create(PersonelHopital|Patient $user): bool
     {
-        return $user instanceof PersonelHopital && $user->role === 'MEDECIN';
+        return $user instanceof PersonelHopital && strtoupper($user->role) === 'MEDECIN';
     }
 
     public function update(PersonelHopital|Patient $user, PlanningMedecin $planning): bool
     {
         return $user instanceof PersonelHopital
-            && $user->role === 'MEDECIN'
+            && strtoupper($user->role) === 'MEDECIN'
             && $planning->medecin_id === $user->id
             && $planning->attributedRendezVous()->count() === 0;
     }
@@ -43,7 +44,7 @@ class PlanningMedecinPolicy
     public function delete(PersonelHopital|Patient $user, PlanningMedecin $planning): bool
     {
         return $user instanceof PersonelHopital
-            && $user->role === 'MEDECIN'
+            && strtoupper($user->role) === 'MEDECIN'
             && $planning->medecin_id === $user->id
             && $planning->attributedRendezVous()->count() === 0;
     }

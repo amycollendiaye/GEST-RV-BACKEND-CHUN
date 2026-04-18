@@ -4,12 +4,34 @@ namespace App\Http\Requests\Patient;
 
 use App\Models\Patient;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdatePatientRequest extends FormRequest
 {
     public function authorize(): bool
     {
         return true;
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        $errors = $validator->errors()->toArray();
+        $formattedErrors = [];
+
+        foreach ($errors as $field => $messages) {
+            $formattedErrors[$field] = is_array($messages) && count($messages) > 0
+                ? $messages[0]
+                : $messages;
+        }
+
+        throw new HttpResponseException(
+            response()->json([
+                'success' => false,
+                'message' => 'Erreur de validation',
+                'errors'  => $formattedErrors,
+            ], 422)
+        );
     }
 
     public function rules(): array

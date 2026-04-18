@@ -8,35 +8,42 @@ class MedecinPolicy
 {
     public function viewAny(PersonelHopital $user): bool
     {
-        return in_array($user->role, ['ADMIN', 'SECRETAIRE'], true);
+        $role = strtoupper($user->role);
+        \Illuminate\Support\Facades\Log::info('Tentative accès liste médecins', [
+            'user_id' => $user->id,
+            'role_original' => $user->role,
+            'role_majuscule' => $role
+        ]);
+        return in_array($role, ['ADMIN', 'SECRETAIRE'], true);
     }
 
     public function view(PersonelHopital $user, PersonelHopital $medecin): bool
     {
-        if (in_array($user->role, ['ADMIN', 'SECRETAIRE'], true)) {
+        $role = strtoupper($user->role);
+        if (in_array($role, ['ADMIN', 'SECRETAIRE'], true)) {
             return true;
         }
 
-        return $user->role === 'MEDECIN' && $user->id === $medecin->id;
+        return $role === 'MEDECIN' && $user->id === $medecin->id;
     }
 
     public function create(PersonelHopital $user): bool
     {
-        return $user->role === 'ADMIN';
+        return strtoupper($user->role) === 'ADMIN';
     }
 
     public function update(PersonelHopital $user, PersonelHopital $medecin): bool
     {
-        return $user->role === 'ADMIN';
+        return strtoupper($user->role) === 'ADMIN';
     }
 
     public function delete(PersonelHopital $user, PersonelHopital $medecin): bool
     {
-        return $user->role === 'ADMIN';
+        return strtoupper($user->role) === 'ADMIN';
     }
 
     public function changerStatut(PersonelHopital $user, PersonelHopital $medecin): bool
     {
-        return $user->role === 'ADMIN';
+        return strtoupper($user->role) === 'ADMIN';
     }
 }

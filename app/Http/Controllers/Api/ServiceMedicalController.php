@@ -53,7 +53,7 @@ class ServiceMedicalController extends Controller
     {
         Gate::authorize('service.viewAny');
 
-        $perPage = (int) ($request->query('per_page', 15));
+        $perPage = (int) ($request->query('per_page', 6));
         $perPage = max(1, min(100, $perPage));
 
         $filters = $request->only([

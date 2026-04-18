@@ -16,12 +16,7 @@ class EncryptRequestData
     ];
 
     // Champs sensibles à déchiffrer avant envoi au client
-    private array $sensitiveFields = [
-        'nom', 'prenom', 'email', 'telephone',
-        'adresse', 'dateNaissance', 'groupeSanguin',
-        'antecedents', 'diagnostic', 'traitement',
-        'symptomes', 'observations',
-    ];
+    
 
     public function __construct(
         private EncryptionService $encryption

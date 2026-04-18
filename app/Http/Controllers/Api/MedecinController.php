@@ -53,10 +53,15 @@ class MedecinController extends Controller
      */
     public function index(Request $request)
     {
-        Gate::authorize('medecin.viewAny');
+        Gate::authorize('viewAny', \App\Models\PersonelHopital::class);
 
-        $perPage = (int) ($request->query('per_page', 15));
-        $perPage = max(1, min(100, $perPage));
+        // Forçage temporaire pour diagnostic
+        $perPage = 6;
+        
+        \Illuminate\Support\Facades\Log::info('Appel index médecins', [
+            'request_params' => $request->all(),
+            'per_page_final' => $perPage
+        ]);
 
         $filters = $request->only([
             'search',
@@ -106,7 +111,7 @@ class MedecinController extends Controller
      */
     public function store(StoreMedecinRequest $request)
     {
-        Gate::authorize('medecin.create');
+        Gate::authorize('create', \App\Models\PersonelHopital::class);
 
         $medecin = $this->createMedecinService->execute($request->validated());
 

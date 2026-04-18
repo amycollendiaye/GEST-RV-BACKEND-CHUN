@@ -12,7 +12,7 @@ use App\Events\SecretaireCreated;
 use App\Listeners\SendAdminCredentialsEmail;
 use App\Listeners\SendConsultationTermineeSms;
 use App\Listeners\SendMedecinCredentialsSms;
-use App\Listeners\SendPatientCredentialsSms;
+use App\Listeners\SendPatientCredentialsMail;
 use App\Listeners\SendRendezVousAttribueSms;
 use App\Listeners\SendRendezVousReprogrammeSms;
 use App\Listeners\SendSecretaireCredentialsSms;
@@ -37,7 +37,7 @@ class EventServiceProvider extends ServiceProvider
             SendSecretaireCredentialsSms::class,
         ],
         PatientCreated::class => [
-            SendPatientCredentialsSms::class,
+            SendPatientCredentialsMail::class,
         ],
         RendezVousAttribue::class => [
             SendRendezVousAttribueSms::class,

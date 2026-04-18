@@ -34,21 +34,22 @@ class StoreServiceMedicalRequest extends FormRequest
             'etat' => 'nullable|in:DISPONIBLE,INDISPONIBLE',
         ];
     }
-     protected function failedValidation(Validator $validator)
+    protected function failedValidation(Validator $validator)
     {
-        // Transformer les erreurs pour obtenir seulement le premier message (sans tableau)
-        $errors          = $validator->errors()->toArray();
+        $errors = $validator->errors()->toArray();
         $formattedErrors = [];
 
         foreach ($errors as $field => $messages) {
-            $formattedErrors[$field] = is_array($messages) && count($messages) > 0
+            $key = ($field === 'nom_hash') ? 'nom' : $field;
+            $formattedErrors[$key] = is_array($messages) && count($messages) > 0
                 ? $messages[0]
                 : $messages;
+            
             Log::info('Validation error', [
                 'field' => $field,
+                'mapped_to' => $key,
                 'messages' => $messages,
             ]);
-
         }
 
         throw new HttpResponseException(
