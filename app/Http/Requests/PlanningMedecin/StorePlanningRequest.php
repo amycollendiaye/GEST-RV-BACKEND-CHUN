@@ -3,6 +3,7 @@
 namespace App\Http\Requests\PlanningMedecin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StorePlanningRequest extends FormRequest
 {
@@ -13,17 +14,32 @@ class StorePlanningRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $rules = [
             'date' => ['required', 'date', 'after:today'],
             'heure_ouverture' => ['required', 'date_format:H:i'],
             'heure_fermeture' => ['required', 'date_format:H:i', 'after:heure_ouverture'],
             'capacite' => ['required', 'integer', 'min:1', 'max:50'],
         ];
+
+        if (strtoupper((string) $this->user()?->role) === 'ADMIN') {
+            $rules['medecin_id'] = [
+                'required',
+                'uuid',
+                Rule::exists('personel_hopitals', 'id')->where(static function ($query) {
+                    $query->where('role', 'MEDECIN');
+                }),
+            ];
+        }
+
+        return $rules;
     }
 
     public function messages(): array
     {
         return [
+            'medecin_id.required' => 'Le medecin est obligatoire pour un administrateur.',
+            'medecin_id.uuid' => 'L identifiant du medecin est invalide.',
+            'medecin_id.exists' => 'Le medecin selectionne est introuvable.',
             'date.required' => 'La date du planning est obligatoire.',
             'date.date' => 'La date du planning est invalide.',
             'date.after' => 'La date du planning doit etre dans le futur.',

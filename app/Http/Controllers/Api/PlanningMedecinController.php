@@ -52,11 +52,26 @@ class PlanningMedecinController extends Controller
         Gate::authorize('planning.create');
 
         $user = auth()->user();
-        if (!$user instanceof PersonelHopital || $user->role !== 'MEDECIN') {
+        if (!$user instanceof PersonelHopital || !in_array($user->role, ['ADMIN', 'MEDECIN'], true)) {
             abort(403, 'Acces refuse');
         }
 
-        $planning = $this->createPlanningService->execute($user, $request->validated());
+        $validated = $request->validated();
+
+        $medecin = $user;
+        if ($user->role === 'ADMIN') {
+            $medecin = PersonelHopital::query()
+                ->where('role', 'MEDECIN')
+                ->find($validated['medecin_id'] ?? null);
+
+            if (!$medecin instanceof PersonelHopital) {
+                abort(422, 'Le medecin selectionne est introuvable.');
+            }
+        }
+
+        unset($validated['medecin_id']);
+
+        $planning = $this->createPlanningService->execute($medecin, $validated);
 
         return response()->json([
             'success' => true,

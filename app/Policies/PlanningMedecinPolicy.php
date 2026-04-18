@@ -30,22 +30,23 @@ class PlanningMedecinPolicy
 
     public function create(PersonelHopital|Patient $user): bool
     {
-        return $user instanceof PersonelHopital && strtoupper($user->role) === 'MEDECIN';
+        return $user instanceof PersonelHopital
+            && in_array(strtoupper($user->role), ['ADMIN', 'MEDECIN'], true);
     }
 
     public function update(PersonelHopital|Patient $user, PlanningMedecin $planning): bool
     {
         return $user instanceof PersonelHopital
-            && strtoupper($user->role) === 'MEDECIN'
-            && $planning->medecin_id === $user->id
+            && in_array(strtoupper($user->role), ['ADMIN', 'MEDECIN'], true)
+            && (strtoupper($user->role) === 'ADMIN' || $planning->medecin_id === $user->id)
             && $planning->attributedRendezVous()->count() === 0;
     }
 
     public function delete(PersonelHopital|Patient $user, PlanningMedecin $planning): bool
     {
         return $user instanceof PersonelHopital
-            && strtoupper($user->role) === 'MEDECIN'
-            && $planning->medecin_id === $user->id
+            && in_array(strtoupper($user->role), ['ADMIN', 'MEDECIN'], true)
+            && (strtoupper($user->role) === 'ADMIN' || $planning->medecin_id === $user->id)
             && $planning->attributedRendezVous()->count() === 0;
     }
 }

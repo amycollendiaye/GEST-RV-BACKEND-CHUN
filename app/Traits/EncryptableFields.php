@@ -26,16 +26,6 @@ trait EncryptableFields
                 }
             }
         });
-
-        // APRÈS lecture depuis la BDD → déchiffrer
-        static::retrieved(function ($model) use ($service) {
-            foreach ($model->encryptable ?? [] as $field) {
-                if (isset($model->attributes[$field])) {
-                    $model->attributes[$field] =
-                        $service->decrypt($model->attributes[$field]);
-                }
-            }
-        });
     }
 
     /**
@@ -47,6 +37,11 @@ trait EncryptableFields
 
         if (in_array($key, $this->encryptable ?? [])) {
             $service = app(EncryptionService::class);
+
+            if (!$service->isEncrypted($value)) {
+                return $value;
+            }
+
             return $service->decrypt($value);
         }
 
