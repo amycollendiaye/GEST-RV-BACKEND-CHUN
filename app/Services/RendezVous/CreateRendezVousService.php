@@ -8,7 +8,6 @@ class CreateRendezVousService
 {
     public function __construct(
         private readonly RendezVousRepositoryInterface $rendezVousRepository,
-        private readonly VerifierContrainteServiceService $verifierContrainteService,
         private readonly VerifierConsultationPrecedenteService $verifierConsultationPrecedenteService
     ) {
     }
@@ -17,7 +16,6 @@ class CreateRendezVousService
     {
         $serviceId = $data['service_medical_id'];
 
-        $this->verifierContrainteService->execute($patientId, $serviceId);
         $this->verifierConsultationPrecedenteService->execute($patientId, $serviceId);
 
         $payload = array_merge($data, [

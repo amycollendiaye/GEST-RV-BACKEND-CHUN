@@ -25,7 +25,7 @@ class CreatePatientService
     ) {
     }
 
-    public function execute(array $payload): Patient
+    public function execute(array $payload): array
     {
         // Génération du matricule et mot de passe
         $matricule = $this->matriculeGenerator->genererPatient();
@@ -63,6 +63,12 @@ class CreatePatientService
 
         event(new PatientCreated($patient, $plainPassword));
 
-        return $patient->fresh(['dossierMedical']);
+        return [
+            'patient' => $patient->fresh(['dossierMedical']),
+            'credentials' => [
+                'login' => $payload['login'],
+                'password' => $plainPassword,
+            ],
+        ];
     }
 }

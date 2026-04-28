@@ -37,9 +37,6 @@ Route::post('/auth/change-password', [AuthController::class, 'changePassword']);
 Route::get('/activation', [ActivationController::class, 'validateToken']);
 Route::post('/activation/password', [ActivationController::class, 'updatePassword']);
 
-// TEST: Sortie du journal du groupe auth pour diagnostic
-Route::get('/journal', [JournalAuditController::class, 'index']);
-
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('journal.auth');
     Route::get('/auth/me', [AuthMeController::class, 'me']);
@@ -48,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/auth/me/secretaire', [AuthMeController::class, 'meSecretaire']);
     Route::get('/auth/me/patient', [AuthMeController::class, 'mePatient']);
 
+    Route::get('/journal', [JournalAuditController::class, 'index']);
     Route::get('/journal/export', [JournalAuditController::class, 'export']);
     Route::get('/journal/{id}', [JournalAuditController::class, 'show']);
 
@@ -89,6 +87,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/patients', [PatientController::class, 'index']);
     Route::get('/patients/mon-profil', [PatientController::class, 'monProfil']);
     Route::get('/patients/mon-dossier', [PatientController::class, 'monDossier']);
+    Route::get('/patients/{id}/dossier', [PatientController::class, 'dossier']);
     Route::get('/patients/{id}', [PatientController::class, 'show']);
     Route::put('/patients/{id}', [PatientController::class, 'update']);
     Route::delete('/patients/{id}', [PatientController::class, 'destroy']);

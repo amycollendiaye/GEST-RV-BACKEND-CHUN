@@ -7,7 +7,6 @@ use App\Http\Requests\RendezVous\AttributionRendezVousRequest;
 use App\Http\Resources\RendezVousResource;
 use App\Models\Patient;
 use App\Services\RendezVous\AttributionAutomatiqueRendezVousService;
-use Illuminate\Support\Facades\Gate;
 
 class AttributionRendezVousController extends Controller
 {
@@ -40,8 +39,6 @@ class AttributionRendezVousController extends Controller
      */
     public function store(AttributionRendezVousRequest $request)
     {
-        Gate::authorize('rendezvous.create');
-
         $user = auth()->user();
         if (!$user instanceof Patient) {
             abort(403, 'Acces refuse');

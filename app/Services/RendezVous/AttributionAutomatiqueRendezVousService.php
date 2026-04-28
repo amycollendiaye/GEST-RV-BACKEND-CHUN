@@ -2,43 +2,31 @@
 
 namespace App\Services\RendezVous;
 
-use App\Events\RendezVousAttribue;
 use App\Exceptions\AucunCreneauDisponibleException;
 use App\Models\PlanningMedecin;
 use App\Models\RendezVous;
 use App\Repositories\Interfaces\PlanningMedecinRepositoryInterface;
 use App\Repositories\Interfaces\RendezVousRepositoryInterface;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class AttributionAutomatiqueRendezVousService
 {
     public function __construct(
         private readonly PlanningMedecinRepositoryInterface $planningRepository,
         private readonly RendezVousRepositoryInterface $rendezVousRepository,
-        private readonly VerifierContrainteServiceService $verifierContrainteService,
         private readonly VerifierConsultationPrecedenteService $verifierConsultationPrecedenteService
     ) {
     }
 
     public function execute(string $patientId, array $data): RendezVous
     {
-        return DB::transaction(function () use ($patientId, $data) {
-            $rendezVous = $this->assignForPatient($patientId, $data);
-
-            DB::afterCommit(function () use ($rendezVous) {
-                event(new RendezVousAttribue($rendezVous->load(['patient', 'medecin', 'serviceMedical'])));
-            });
-
-            return $rendezVous;
-        });
+        return $this->assignForPatient($patientId, $data);
     }
 
     public function assignForPatient(string $patientId, array $data): RendezVous
     {
         $serviceId = $data['service_medical_id'];
 
-        $this->verifierContrainteService->execute($patientId, $serviceId);
         $this->verifierConsultationPrecedenteService->execute($patientId, $serviceId);
 
         $planning = $this->planningRepository->findClosestAvailableForService($serviceId);

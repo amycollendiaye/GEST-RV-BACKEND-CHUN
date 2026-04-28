@@ -3,9 +3,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\JournalAudit\FiltreJournalRequest;
-use App\Http\Resources\JournalAudit\JournalAuditCollection;
-use App\Http\Resources\JournalAudit\JournalAuditResource;
-use App\Models\PersonelHopital;
+use App\Http\Resources\JournalAuditCollection;
+use App\Http\Resources\JournalAuditResource;
 use App\Repositories\Interfaces\JournalAuditRepositoryInterface;
 use App\Services\JournalAudit\FiltreJournalService;
 use Illuminate\Support\Facades\Gate;
@@ -146,6 +145,9 @@ class JournalAuditController extends Controller
 
         Gate::authorize('journal.export');
 
-        return $this->filtreJournalService->exporterCsv($request->validated());
+        $validated = $request->validated();
+        $format = $validated['format'] ?? 'csv';
+
+        return $this->filtreJournalService->exporter($validated, $format);
     }
 }

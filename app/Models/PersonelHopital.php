@@ -50,6 +50,7 @@ class PersonelHopital extends Authenticatable
         'prenom',
         'email',
         'telephone',
+        'specialite',
     ];
 
     protected static function booted()

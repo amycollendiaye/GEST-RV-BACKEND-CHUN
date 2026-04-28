@@ -66,7 +66,22 @@ class JournalAuditRepository implements JournalAuditRepositoryInterface
 
         if (!empty($filters['search'])) {
             $search = trim((string) $filters['search']);
-            $query->whereRaw('details::text ILIKE ?', ['%' . $search . '%']);
+            $like = '%' . $search . '%';
+
+            $query->where(function (Builder $builder) use ($like): void {
+                $builder
+                    ->where('type_action', 'ILIKE', $like)
+                    ->orWhere('adresse_ip', 'ILIKE', $like)
+                    ->orWhereRaw('CAST(details AS TEXT) ILIKE ?', [$like])
+                    ->orWhereHas('auteur', function (Builder $auteurQuery) use ($like): void {
+                        $auteurQuery
+                            ->where('role', 'ILIKE', $like)
+                            ->orWhere('matricule', 'ILIKE', $like)
+                            ->orWhereHas('infosConnexion', function (Builder $infosConnexionQuery) use ($like): void {
+                                $infosConnexionQuery->where('login', 'ILIKE', $like);
+                            });
+                    });
+            });
         }
 
         $sortDir = strtolower($filters['sort_dir'] ?? 'desc') === 'asc' ? 'asc' : 'desc';

@@ -18,7 +18,7 @@ class CreateMedecinService
     ) {
     }
 
-    public function execute(array $data)
+    public function execute(array $data): array
     {
         $matricule = $this->matriculeGenerator->genererMedecin();
         $plainPassword = $this->passwordGenerator->genererTemporaire();
@@ -48,6 +48,12 @@ class CreateMedecinService
             \Illuminate\Support\Facades\Log::error('Erreur lors de l\'envoi des identifiants au médecin : ' . $e->getMessage());
         }
 
-        return $medecin;
+        return [
+            'medecin' => $medecin->load(['serviceMedical', 'infosConnexion']),
+            'credentials' => [
+                'login' => $login,
+                'password' => $plainPassword,
+            ],
+        ];
     }
 }

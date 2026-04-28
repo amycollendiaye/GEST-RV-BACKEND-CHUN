@@ -86,8 +86,6 @@ class RendezVousController extends Controller
     // Conserved for backward compatibility in code, but documented in AttributionRendezVousController.
     public function store(StoreRendezVousRequest $request)
     {
-        Gate::authorize('rendezvous.create');
-
         $user = auth()->user();
         if (!$user instanceof Patient) {
             abort(403, 'Non autorisé');

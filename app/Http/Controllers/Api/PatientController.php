@@ -126,12 +126,15 @@ class PatientController extends Controller
         $payload['date_naissance'] = $payload['dateNaissance'];
         unset($payload['dateNaissance']);
 
-        $patient = $this->createPatientService->execute($payload);
+        $result = $this->createPatientService->execute($payload);
 
         return response()->json([
             'success' => true,
             'message' => 'Patient créé avec succès',
-            'data' => new PatientResource($patient),
+            'data' => [
+                'patient' => new PatientResource($result['patient']),
+                'credentials' => $result['credentials'],
+            ],
             'errors' => null,
         ], 201);
     }
@@ -370,6 +373,30 @@ class PatientController extends Controller
         if (!$dossier) {
             abort(404, 'Dossier médical introuvable');
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Dossier médical du patient',
+            'data' => new DossierMedicalResource($dossier),
+            'errors' => null,
+        ]);
+    }
+
+    public function dossier(string $id)
+    {
+        $patient = $this->patientRepository->findById($id);
+        if (!$patient) {
+            abort(404, 'Patient introuvable');
+        }
+
+        Gate::authorize('patient.view', $patient);
+
+        $dossier = $this->consulterDossierMedicalService->executeByPatient($patient->id);
+        if (!$dossier) {
+            abort(404, 'Dossier médical introuvable');
+        }
+
+        Gate::authorize('dossier.view', $dossier);
 
         return response()->json([
             'success' => true,

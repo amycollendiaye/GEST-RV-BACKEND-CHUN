@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Patient;
 use App\Models\PersonelHopital;
 use App\Models\ServiceMedical;
 
@@ -10,7 +11,7 @@ class ServiceMedicalPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(PersonelHopital $user): bool
+    public function viewAny(PersonelHopital|Patient $user): bool
     {
         return true;
     }
@@ -18,7 +19,7 @@ class ServiceMedicalPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(PersonelHopital $user, ServiceMedical $serviceMedical): bool
+    public function view(PersonelHopital|Patient $user, ServiceMedical $serviceMedical): bool
     {
         return true;
     }

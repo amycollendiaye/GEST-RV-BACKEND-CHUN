@@ -113,12 +113,15 @@ class MedecinController extends Controller
     {
         Gate::authorize('create', \App\Models\PersonelHopital::class);
 
-        $medecin = $this->createMedecinService->execute($request->validated());
+        $result = $this->createMedecinService->execute($request->validated());
 
         return response()->json([
             'success' => true,
             'message' => 'Médecin créé avec succès',
-            'data' => new MedecinResource($medecin),
+            'data' => [
+                'medecin' => new MedecinResource($result['medecin']),
+                'credentials' => $result['credentials'],
+            ],
             'errors' => null,
         ], 201);
     }
